@@ -1,0 +1,56 @@
+package manager;
+
+import java.sql.*;
+import java.util.Scanner;
+public abstract class Manager {
+	private static final String SERVER = "localhost";
+	private static final int PORT = 3306;
+	private static final String DATABASE = "cprg211";
+	private static final String USERNAME = "root";
+	private static final String PASSWORD = "password";
+	
+	protected Connection conn;
+	protected Statement stmt;
+	
+	protected Scanner keyboard;
+	
+	public Manager() {
+		try {
+			connect();
+			displayMenu();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	private void connect() throws SQLException {
+		final String DB_URL = String.format("jdbc:mariadb://%s:%d/%s?user=%s&password=%s", SERVER, PORT, DATABASE, USERNAME, PASSWORD);
+		conn = DriverManager.getConnection(DB_URL);
+		System.out.println("Connection to DB established.");
+		stmt= conn.createStatement();	
+	}
+	
+	private void disconnect()
+	{
+		try
+		{
+			conn.close();
+			System.out.println("Connection closed!");
+			System.out.println("Goodbye!");
+			keyboard.close();
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public abstract void displayMenu();
+	public abstract void add();
+	public abstract void remove();
+	public abstract void update();
+	public abstract void search();
+	
+	
+}
