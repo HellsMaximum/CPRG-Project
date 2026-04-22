@@ -5,6 +5,10 @@ import java.util.Scanner;
 
 public class MemberManager extends Manager {
 
+	public MemberManager(Connection conn, Statement stmt) {
+		super(conn, stmt);
+	}
+
 	@Override
 	public void displayMenu() {
 		// TODO Auto-generated method stub
@@ -31,12 +35,6 @@ public class MemberManager extends Manager {
 
 	@Override
 	public void search() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void createTable() {
 		// TODO Auto-generated method stub
 		
 	}

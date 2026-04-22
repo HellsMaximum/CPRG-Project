@@ -9,16 +9,15 @@ import errors.NotFoundException;
 
 public class BookManager extends Manager {
 
+	public BookManager(Connection conn, Statement stmt) {
+		super(conn, stmt);
+		// TODO Auto-generated constructor stub
+	}
+
 	// Method to display the menu options for the book manager and handle user input
 	@Override
 	public void displayMenu() {
-		// Create the book table if it does not already exist
-		try {
-			createTable();
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-		// Variable to hold the user's menu input and initalize the keyboard scanner created in the method abstract class
+		// Variable to hold the user's menu input and initialize the keyboard scanner created in the method abstract class
 		int choice = 0;
 		keyboard = new Scanner(System.in);
 		// Loop menu options until the user chooses to exit the book manager
@@ -51,7 +50,8 @@ public class BookManager extends Manager {
 					remove();
 					break;
 				case 5:
-					disconnect();
+					keyboard.close();
+					System.out.println("Returning to main menu.");
 					break;
 				default:
 					System.out.println("Invalid input. Please Enter 1 to 5.");	
@@ -62,9 +62,10 @@ public class BookManager extends Manager {
 	// Method to add a new book to the database
 	// Includes error handling for the ISBN, title, genre, and author inputs using the custom exceptions created in the errors package
 	@Override
-	public void add() throws Throwable {
+	public void add() {
 		// get the isbn the user wants to add
 		int isbn;
+		try {
 		System.out.println("Enter ISBN: ");
 		String isbnString = keyboard.nextLine();
 		// Check if the ISBN is valid
@@ -78,7 +79,6 @@ public class BookManager extends Manager {
 		// Select the book with the matching ISBN
 		String sqlStmt = "SELECT * FROM BOOK WHERE ISBN = ?";
 
-		try {
 			// Check if the ISBN already exists in the database
 			PreparedStatement stmt = conn.prepareStatement(sqlStmt);
 			stmt.setInt(1, isbn);
@@ -401,19 +401,6 @@ public class BookManager extends Manager {
 				throw new IllegalArgumentException("Invalid input.");
 		}
 		
-	}
-
-	@Override
-	public void createTable() throws SQLException {
-		String sqlStmt = "CREATE TABLE IF NOT EXISTS Book (" +
-                		 "isbn INT(13) PRIMARY KEY, " +
-                		 "title VARCHAR(75) NOT NULL, " +
-                		 "genre VARCHAR(75) NOT NULL, " +
-                		 "author VARCHAR(75) NOT NULL)";
-		System.out.println(sqlStmt);
-
-		PreparedStatement stmt = conn.prepareStatement(sqlStmt);
-		stmt.execute();	
 	}
 	
 	@Override
