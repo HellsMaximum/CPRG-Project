@@ -23,34 +23,29 @@ public abstract class Manager {
 		}
 	}
 	
-	private void connect() throws SQLException {
+	protected void connect() throws SQLException {
 		final String DB_URL = String.format("jdbc:mariadb://%s:%d/%s?user=%s&password=%s", SERVER, PORT, DATABASE, USERNAME, PASSWORD);
 		conn = DriverManager.getConnection(DB_URL);
 		System.out.println("Connection to DB established.");
 		stmt= conn.createStatement();	
 	}
 	
-	private void disconnect()
-	{
-		try
-		{
+	protected void disconnect() {
+		try {
 			conn.close();
 			System.out.println("Connection closed!");
 			System.out.println("Goodbye!");
 			keyboard.close();
-		} catch (SQLException e)
-		{
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public abstract void displayMenu();
+	public abstract void createTable() throws SQLException;
 	public abstract void add();
 	public abstract void remove();
 	public abstract void update();
 	public abstract void search();
-	
-	
 }
