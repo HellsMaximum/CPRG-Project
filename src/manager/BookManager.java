@@ -415,4 +415,22 @@ public class BookManager extends Manager {
 		PreparedStatement stmt = conn.prepareStatement(sqlStmt);
 		stmt.execute();	
 	}
+	
+	@Override
+	public void viewAll() {
+		String sqlStmt = "SELECT * FROM BOOK";
+		try {
+			PreparedStatement stmt = conn.prepareStatement(sqlStmt);
+			ResultSet resultSet = stmt.executeQuery();
+			while (resultSet.next()) {
+				System.out.println("ISBN: " + resultSet.getInt("ISBN"));
+				System.out.println("Title: " + resultSet.getString("Title"));
+				System.out.println("Genre: " + resultSet.getString("Genre"));
+				System.out.println("Author: " + resultSet.getString("Author"));
+				System.out.println();
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
 }

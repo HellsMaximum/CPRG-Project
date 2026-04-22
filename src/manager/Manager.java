@@ -55,4 +55,5 @@ public abstract class Manager {
 	public abstract void remove();
 	public abstract void update();
 	public abstract void search();
+	public abstract void viewAll();
 }

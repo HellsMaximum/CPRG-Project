@@ -41,4 +41,10 @@ public class MemberManager extends Manager {
 		
 	}
 
+	@Override
+	public void viewAll() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
