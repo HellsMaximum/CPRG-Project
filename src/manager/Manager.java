@@ -23,6 +23,8 @@ public abstract class Manager {
 			displayMenu();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
+		} catch (Throwable e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -51,6 +53,6 @@ public abstract class Manager {
 	public abstract void createTable() throws SQLException;
 	public abstract void add() throws Throwable;
 	public abstract void remove();
-	public abstract void update();
+	public abstract void update() throws Throwable;
 	public abstract void search();
 }

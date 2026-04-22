@@ -33,14 +33,18 @@ public class BookManager extends Manager {
 				try {
 					add();
 				} catch (Throwable e) {
-					e.printStackTrace();
+					e.getMessage();
 				}
 					break;
 				case 2:
 					search();
 					break;
 				case 3:
+				try {
 					update();
+				} catch (Throwable e) {
+					e.getMessage();
+				}
 					break;
 				case 4:
 					remove();
@@ -111,9 +115,99 @@ public class BookManager extends Manager {
 	}
 
 	@Override
-	public void update() {
-		// TODO Auto-generated method stub
+	public void update() throws Throwable {
+		// get the user to input the ISBN of the book they want to update
+		System.out.println("Enter ISBN of the book to update: ");
+		int isbnToUpdate = Integer.parseInt(keyboard.nextLine());
+
+		// Select the book with the matching ISBN
+		String sqlStmt = "SELECT * FROM BOOK WHERE ISBN = ?";
 		
+		sqlSearch : try {
+			PreparedStatement stmt = conn.prepareStatement(sqlStmt);
+			stmt.setInt(1, isbnToUpdate);
+			ResultSet resultSet = stmt.executeQuery();
+			boolean found = false;
+			// display the books current information if it is found
+			while (resultSet.next()) {
+				found = true;
+				System.out.println("ISBN: " + resultSet.getInt("ISBN"));
+				System.out.println("Title: " + resultSet.getString("Title"));
+				System.out.println("Genre: " + resultSet.getString("Genre"));
+				System.out.println("Author: " + resultSet.getString("Author"));
+			}
+			if(!found) {
+				System.out.println("Record with ISBN " + isbnToUpdate + " wasn't found");
+				break sqlSearch;
+			}
+
+
+
+
+
+			
+
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+
+
+		// Select the element of the book to edit
+		System.out.println("Select element to update: \n1) Title \n2) Genre \n3) Author");
+		int elementToUpdate = 0;
+		while (elementToUpdate < 1 || elementToUpdate > 3) {
+			elementToUpdate = Integer.parseInt(keyboard.nextLine());
+			if (elementToUpdate < 1 || elementToUpdate > 3) {
+				System.out.println("Invalid input. Please enter a number between 1 and 3.");
+			}
+		}
+		// Switch statement to update selected element
+		// Throws custom error if the new input is invalid
+		switch(elementToUpdate){
+			case 1:
+				System.out.println("Enter new title: ");
+				String newTitle = keyboard.nextLine();
+				if (newTitle.length() > 75) {
+					throw new CharacterLimitException("Book title cannot exceed 75 characters.");
+				}
+				break;
+			case 2:
+				System.out.println("Enter new genre: ");
+				String newGenre = keyboard.nextLine();
+				if (newGenre.length() > 75) {
+					throw new CharacterLimitException("Genre cannot exceed 75 characters.");
+				}
+				break;
+			case 3:
+				System.out.println("Enter new author: ");
+				String newAuthor = keyboard.nextLine();
+				if (newAuthor.length() > 75) {
+					throw new CharacterLimitException("Author name cannot exceed 75 characters.");
+				}
+				break;
+			default:
+				throw new IllegalArgumentException("Invalid input.");
+		}
+		
+
+
+		// System.out.println("Enter new GPA: ");
+		// double newGpa = Double.parseDouble(keyboard.nextLine());
+		
+		// String sqlStmt = "UPDATE STUDENT SET GPA = ? WHERE ID = ?";
+		// try
+		// {
+		// 	PreparedStatement stmt = conn.prepareStatement(sqlStmt);
+		// 	stmt.setDouble(1, newGpa);
+		// 	stmt.setInt(2, idToUpdate);
+		// 	int row = stmt.executeUpdate();
+		// 	System.out.println(row + " record(s) updated.");
+			
+		// } catch (SQLException e)
+		// {
+		// 	System.out.println(e.getMessage());
+		// } 
 	}
 
 	@Override
