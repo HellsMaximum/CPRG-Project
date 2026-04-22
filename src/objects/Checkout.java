@@ -2,13 +2,20 @@ package objects;
 
 public class Checkout
 {
+	private int checkoutId;
 	private String dateOfCheckout;
 	private String dateToReturn;
 	private String overdueFees;
 	private boolean returnedStatus;
 	private int checkedOutISBN;
-	private int checkedOutId;
+	private int memberCheckedOutId;
 	
+	public int getCheckoutId() {
+		return checkoutId;
+	}
+	public void setCheckoutId(int checkoutId) {
+		this.checkoutId = checkoutId;
+	}
 	public String getDateOfCheckout() {
 		return dateOfCheckout;
 	}
@@ -39,11 +46,11 @@ public class Checkout
 	public void setCheckedOutISBN(int checkedOutISBN) {
 		this.checkedOutISBN = checkedOutISBN;
 	}
-	public int getCheckedOutId() {
-		return checkedOutId;
+	public int getMemberCheckedOutId() {
+		return memberCheckedOutId;
 	}
-	public void setCheckedOutId(int checkedOutId) {
-		this.checkedOutId = checkedOutId;
+	public void setMemberCheckedOutId(int checkedOutId) {
+		this.memberCheckedOutId = checkedOutId;
 	}
 	
 	

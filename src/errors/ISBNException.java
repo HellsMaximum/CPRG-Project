@@ -1,7 +1,11 @@
 package errors;
 
 public class ISBNException extends Throwable{
-    // error message variable
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	// error message variable
     private String error;
 
     // constructor with no parameters that sets a default error message and a constructor with a string parameter to set a custom error message
