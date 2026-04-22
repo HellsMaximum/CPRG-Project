@@ -2,16 +2,16 @@ package objects;
 
 public class Member 
 {
-	int id;
+	long id;
 	String name;
 	String totalOverdueFees;
 	boolean canCheckout;
 	
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getName() {

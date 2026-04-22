@@ -2,17 +2,17 @@ package objects;
 
 public class Book 
 {
-	private int ISBN;
+	private long ISBN;
 	private String title;
 	private String genre;
 	private String author;
 	private boolean checkedOut;
 	
 	
-	public int getISBN() {
+	public long getISBN() {
 		return ISBN;
 	}
-	public void setISBN(int iSBN) {
+	public void setISBN(long iSBN) {
 		ISBN = iSBN;
 	}
 	public String getTitle() {

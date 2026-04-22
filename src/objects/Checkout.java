@@ -6,8 +6,8 @@ public class Checkout
 	private String dateToReturn;
 	private String overdueFees;
 	private boolean returnedStatus;
-	private int checkedOutISBN;
-	private int checkedOutId;
+	private long checkedOutISBN;
+	private long checkedOutId;
 	
 	public String getDateOfCheckout() {
 		return dateOfCheckout;
@@ -33,16 +33,16 @@ public class Checkout
 	public void setReturnedStatus(boolean returnedStatus) {
 		this.returnedStatus = returnedStatus;
 	}
-	public int getCheckedOutISBN() {
+	public long getCheckedOutISBN() {
 		return checkedOutISBN;
 	}
-	public void setCheckedOutISBN(int checkedOutISBN) {
+	public void setCheckedOutISBN(long checkedOutISBN) {
 		this.checkedOutISBN = checkedOutISBN;
 	}
-	public int getCheckedOutId() {
+	public long getCheckedOutId() {
 		return checkedOutId;
 	}
-	public void setCheckedOutId(int checkedOutId) {
+	public void setCheckedOutId(long checkedOutId) {
 		this.checkedOutId = checkedOutId;
 	}
 	
