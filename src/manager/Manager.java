@@ -18,6 +18,7 @@ public abstract class Manager {
 			this.stmt = stmt;
 			displayMenu();
 		} catch (Throwable e) {
+			System.out.println("Error initializing manager: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}

@@ -16,6 +16,8 @@ public class AppDriver {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
+		
 		new BookManager(dbc.getConn(), dbc.getStmt());
 
 
