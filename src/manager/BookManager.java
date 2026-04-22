@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import errors.CharacterLimitException;
 import errors.ISBNException;
+import errors.NotFoundException;
 
 public class BookManager extends Manager {
 
@@ -110,9 +111,9 @@ public class BookManager extends Manager {
 					throw new CharacterLimitException("Author name cannot exceed 75 characters.");
 				}
 				
-				String sqlStmt = "INSERT INTO Book (ISBN, Title, Genre, Author) VALUES (?, ?, ?, ?)";
+				sqlStmt = "INSERT INTO Book (ISBN, Title, Genre, Author) VALUES (?, ?, ?, ?)";
 				
-				PreparedStatement stmt = conn.prepareStatement(sqlStmt);
+				stmt = conn.prepareStatement(sqlStmt);
 				stmt.setInt(1, isbn);
 				stmt.setString(2, title);
 				stmt.setString(3, genre);
@@ -130,7 +131,7 @@ public class BookManager extends Manager {
 		}
 	}
 
-	// method to remove a book from the databse based on the ISBN input from the user
+	// method to remove a book from the database based on the ISBN input from the user
 	@Override
 	public void remove() {
 		System.out.println("Enter ISBN of book to remove: ");
@@ -149,7 +150,7 @@ public class BookManager extends Manager {
 			}
 			// if the book is not found error out and return to menu
 			if (!found){
-				throw new ISBNException("Book with ISBN: " + isbn + " was not found.");
+				throw new NotFoundException("Book with ISBN: " + isbn + " was not found.");
 			}
 			// if the book is found, delete it from the database and return to the menu
 			else {
@@ -161,7 +162,7 @@ public class BookManager extends Manager {
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-		} catch (ISBNException e) {
+		} catch (NotFoundException e) {
 			System.out.println(e.getMessage());
 		}
 		
@@ -191,7 +192,7 @@ public class BookManager extends Manager {
 			}
 			// if the book is not found, break out of the sql search and return to the menu
 			if(!found) {
-				throw new ISBNException("Book with ISBN: " + isbnToUpdate + " was not found.");
+				throw new NotFoundException("Book with ISBN: " + isbnToUpdate + " was not found.");
 			} 
 			else {
 				// Select the element of the book to edit
@@ -254,14 +255,151 @@ public class BookManager extends Manager {
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-		} catch (ISBNException | CharacterLimitException | IllegalArgumentException e) {
+		} catch (NotFoundException | CharacterLimitException | IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 		}
 	}
 
 	@Override
 	public void search() {
-		// TODO Auto-generated method stub
+		System.out.println("Enter how you want to search for a book: \n1) ISBN \n2) Title \n3) Genre \n4) Author");
+		int searchType = 0;
+		while (searchType < 1 || searchType > 4) {
+			searchType = Integer.parseInt(keyboard.nextLine());
+			if (searchType < 1 || searchType > 4) {
+				System.out.println("Invalid input. Please enter a number between 1 and 4.");
+			}
+		}
+		switch(searchType){
+			case 1:
+				System.out.println("Enter ISBN: ");
+				int isbn = Integer.parseInt(keyboard.nextLine());
+				while (String.valueOf(isbn).length() != 13 || !String.valueOf(isbn).matches("\\d+")) {
+					System.out.println("Invalid input. ISBN must be 13 characters long and only contain numeric characters. \nPlease enter a valid ISBN: ");
+					isbn = Integer.parseInt(keyboard.nextLine());
+				}
+				// Select the book with the matching ISBN
+				String sqlStmtISBN = "SELECT * FROM BOOK WHERE ISBN = ?";
+				try {
+					PreparedStatement stmt = conn.prepareStatement(sqlStmtISBN);
+					stmt.setInt(1, isbn);
+					ResultSet resultSet = stmt.executeQuery();
+					boolean found = false;
+					// Check if the ISBN is valid
+					while (resultSet.next()) {
+						found = true;
+						System.out.println("ISBN: " + resultSet.getInt("ISBN"));
+						System.out.println("Title: " + resultSet.getString("Title"));
+						System.out.println("Genre: " + resultSet.getString("Genre"));
+						System.out.println("Author: " + resultSet.getString("Author"));
+					}
+					// if the book is not found, break out of the sql search and return to the menu
+					if (!found){
+						throw new NotFoundException("Book with ISBN: " + isbn + " was not found.");
+					} 
+				} catch (SQLException e) {
+					System.out.println(e.getMessage());
+				} catch (NotFoundException e) {
+					System.out.println(e.getMessage());
+				}
+				break;
+			
+			case 2:
+				System.out.println("Enter Title: ");
+				String title = keyboard.nextLine();
+				while(title.length() > 75) {
+					System.out.println("Invalid input. Title cannot exceed 75 characters. \nPlease enter a valid title: ");
+					title = keyboard.nextLine();
+				}
+				// Select the book with the matching title
+				String sqlStmtTitle = "SELECT * FROM BOOK WHERE TITLE = ?";
+				try {
+					PreparedStatement stmt = conn.prepareStatement(sqlStmtTitle);
+					stmt.setString(1, title);
+					ResultSet resultSet = stmt.executeQuery();
+					boolean found = false;
+					while (resultSet.next()) {
+						found = true;
+						System.out.println("ISBN: " + resultSet.getInt("ISBN"));
+						System.out.println("Title: " + resultSet.getString("Title"));
+						System.out.println("Genre: " + resultSet.getString("Genre"));
+						System.out.println("Author: " + resultSet.getString("Author"));
+					}
+					if (!found){
+						throw new NotFoundException("Book with Title: " + title + " was not found.");
+					} 
+				} catch (SQLException e) {
+					System.out.println(e.getMessage());
+				} catch (NotFoundException e) {
+					System.out.println(e.getMessage());
+				}
+				break;
+
+			case 3:
+				System.out.println("Enter Genre: ");
+				String genre = keyboard.nextLine();
+				while (genre.length() > 75) {
+					System.out.println("Invalid input. Genre cannot exceed 75 characters. \nPlease enter a valid genre: ");
+					genre = keyboard.nextLine();
+				}
+
+				// Select the book with the matching genre
+				String sqlStmtGenre = "SELECT * FROM BOOK WHERE GENRE = ?";
+				try {
+					PreparedStatement stmt = conn.prepareStatement(sqlStmtGenre);
+					stmt.setString(1, genre);
+					ResultSet resultSet = stmt.executeQuery();
+					boolean found = false;
+					while (resultSet.next()) {
+						found = true;
+						System.out.println("ISBN: " + resultSet.getInt("ISBN"));
+						System.out.println("Title: " + resultSet.getString("Title"));
+						System.out.println("Genre: " + resultSet.getString("Genre"));
+						System.out.println("Author: " + resultSet.getString("Author"));
+					}
+					if (!found){
+						throw new NotFoundException("Book with Genre: " + genre + " was not found.");
+					} 
+				} catch (SQLException e) {
+					System.out.println(e.getMessage());
+				} catch (NotFoundException e) {
+					System.out.println(e.getMessage());
+				}
+				break;
+			case 4:
+				System.out.println("Enter Author: ");
+				String author = keyboard.nextLine();
+				while (author.length() > 75) {
+					System.out.println("Invalid input. Author cannot exceed 75 characters. \nPlease enter a valid author: ");
+					author = keyboard.nextLine();
+				}
+
+				// Select the book with the matching author
+				String sqlStmtAuthor = "SELECT * FROM BOOK WHERE AUTHOR = ?";
+				try {
+					PreparedStatement stmt = conn.prepareStatement(sqlStmtAuthor);
+					stmt.setString(1, author);
+					ResultSet resultSet = stmt.executeQuery();
+					boolean found = false;
+					while (resultSet.next()) {
+						found = true;
+						System.out.println("ISBN: " + resultSet.getInt("ISBN"));
+						System.out.println("Title: " + resultSet.getString("Title"));
+						System.out.println("Genre: " + resultSet.getString("Genre"));
+						System.out.println("Author: " + resultSet.getString("Author"));
+					}
+					if (!found){
+						throw new NotFoundException("Book with Author: " + author + " was not found.");
+					} 
+				} catch (SQLException e) {
+					System.out.println(e.getMessage());
+				} catch (NotFoundException e) {
+					System.out.println(e.getMessage());
+				}
+				break;
+			default:
+				throw new IllegalArgumentException("Invalid input.");
+		}
 		
 	}
 
