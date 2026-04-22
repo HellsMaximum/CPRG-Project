@@ -77,7 +77,7 @@ public class BookManager extends Manager {
 			throw new ISBNException();
 		}
 		isbn = Long.parseLong(isbnString);
-		
+
 		// Select the book with the matching ISBN
 		String sqlStmt = "SELECT * FROM BOOK WHERE ISBN = ?";
 
@@ -187,10 +187,7 @@ public class BookManager extends Manager {
 			// display the books current information if it is found
 			while (resultSet.next()) {
 				found = true;
-				System.out.println("Current ISBN: " + resultSet.getLong("ISBN"));
-				System.out.println("Current Title: " + resultSet.getString("Title"));
-				System.out.println("Current Genre: " + resultSet.getString("Genre"));
-				System.out.println("Current Author: " + resultSet.getString("Author"));
+				System.out.println(String.format("ISBN: %d Title: %s Genre: %s Author: %s", resultSet.getLong("ISBN"), resultSet.getString("Title"), resultSet.getString("Genre"), resultSet.getString("Author")));
 			}
 			// if the book is not found, break out of the sql search and return to the menu
 			if(!found) {
@@ -216,6 +213,7 @@ public class BookManager extends Manager {
 							throw new CharacterLimitException("Book title cannot exceed 75 characters.");
 						}
 						else {
+							sqlStmt = "UPDATE BOOK SET TITLE = ? WHERE ISBN = ?";
 							stmt = conn.prepareStatement(sqlStmt);
 							stmt.setString(1, newTitle);
 							stmt.setLong(2, isbnToUpdate);
@@ -230,6 +228,7 @@ public class BookManager extends Manager {
 							throw new CharacterLimitException("Genre cannot exceed 75 characters.");
 						}
 						else {
+							sqlStmt = "UPDATE BOOK SET GENRE = ? WHERE ISBN = ?";
 							stmt = conn.prepareStatement(sqlStmt);
 							stmt.setString(1, newGenre);
 							stmt.setLong(2, isbnToUpdate);
@@ -244,6 +243,7 @@ public class BookManager extends Manager {
 							throw new CharacterLimitException("Author name cannot exceed 75 characters.");
 						}
 						else {
+							sqlStmt = "UPDATE BOOK SET AUTHOR = ? WHERE ISBN = ?";
 							stmt = conn.prepareStatement(sqlStmt);
 							stmt.setString(1, newAuthor);
 							stmt.setLong(2, isbnToUpdate);
@@ -265,14 +265,18 @@ public class BookManager extends Manager {
 	@Override
 	public void search() {
 		System.out.println("Enter how you want to search for a book: \n1) ISBN \n2) Title \n3) Genre \n4) Author");
-		int searchType = 0;
-		while (searchType < 1 || searchType > 4) {
-			searchType = Integer.parseInt(keyboard.nextLine());
-			if (searchType < 1 || searchType > 4) {
+		int searchTypeInt = 0;
+		while (searchTypeInt < 1 || searchTypeInt > 4) {
+			String SearchType = keyboard.nextLine();
+			if (!SearchType.matches("[1-4]")) {
 				System.out.println("Invalid input. Please enter a number between 1 and 4.");
+				continue;
+			} else {
+				searchTypeInt = Integer.parseInt(SearchType);
 			}
+
 		}
-		switch(searchType){
+		switch(searchTypeInt){
 			case 1:
 				System.out.println("Enter ISBN: ");
 				long isbn = Long.parseLong(keyboard.nextLine());
@@ -290,10 +294,7 @@ public class BookManager extends Manager {
 					// Check if the ISBN is valid
 					while (resultSet.next()) {
 						found = true;
-						System.out.println("ISBN: " + resultSet.getLong("ISBN"));
-						System.out.println("Title: " + resultSet.getString("Title"));
-						System.out.println("Genre: " + resultSet.getString("Genre"));
-						System.out.println("Author: " + resultSet.getString("Author"));
+						System.out.println(String.format("ISBN: %d Title: %s Genre: %s Author: %s", resultSet.getLong("ISBN"), resultSet.getString("Title"), resultSet.getString("Genre"), resultSet.getString("Author")));
 					}
 					// if the book is not found, break out of the sql search and return to the menu
 					if (!found){
@@ -322,10 +323,7 @@ public class BookManager extends Manager {
 					boolean found = false;
 					while (resultSet.next()) {
 						found = true;
-						System.out.println("ISBN: " + resultSet.getLong("ISBN"));
-						System.out.println("Title: " + resultSet.getString("Title"));
-						System.out.println("Genre: " + resultSet.getString("Genre"));
-						System.out.println("Author: " + resultSet.getString("Author"));
+						System.out.println(String.format("ISBN: %d Title: %s Genre: %s Author: %s", resultSet.getLong("ISBN"), resultSet.getString("Title"), resultSet.getString("Genre"), resultSet.getString("Author")));
 					}
 					if (!found){
 						throw new NotFoundException("Book with Title: " + title + " was not found.");
@@ -354,10 +352,7 @@ public class BookManager extends Manager {
 					boolean found = false;
 					while (resultSet.next()) {
 						found = true;
-						System.out.println("ISBN: " + resultSet.getLong("ISBN"));
-						System.out.println("Title: " + resultSet.getString("Title"));
-						System.out.println("Genre: " + resultSet.getString("Genre"));
-						System.out.println("Author: " + resultSet.getString("Author"));
+						System.out.println(String.format("ISBN: %d Title: %s Genre: %s Author: %s", resultSet.getLong("ISBN"), resultSet.getString("Title"), resultSet.getString("Genre"), resultSet.getString("Author")));
 					}
 					if (!found){
 						throw new NotFoundException("Book with Genre: " + genre + " was not found.");
@@ -385,10 +380,7 @@ public class BookManager extends Manager {
 					boolean found = false;
 					while (resultSet.next()) {
 						found = true;
-						System.out.println("ISBN: " + resultSet.getLong("ISBN"));
-						System.out.println("Title: " + resultSet.getString("Title"));
-						System.out.println("Genre: " + resultSet.getString("Genre"));
-						System.out.println("Author: " + resultSet.getString("Author"));
+						System.out.println(String.format("ISBN: %d Title: %s Genre: %s Author: %s", resultSet.getLong("ISBN"), resultSet.getString("Title"), resultSet.getString("Genre"), resultSet.getString("Author")));
 					}
 					if (!found){
 						throw new NotFoundException("Book with Author: " + author + " was not found.");
@@ -412,11 +404,7 @@ public class BookManager extends Manager {
 			PreparedStatement stmt = conn.prepareStatement(sqlStmt);
 			ResultSet resultSet = stmt.executeQuery();
 			while (resultSet.next()) {
-				System.out.println("ISBN: " + resultSet.getLong("ISBN"));
-				System.out.println("Title: " + resultSet.getString("Title"));
-				System.out.println("Genre: " + resultSet.getString("Genre"));
-				System.out.println("Author: " + resultSet.getString("Author"));
-				System.out.println();
+				System.out.println(String.format("ISBN: %d Title: %s Genre: %s Author: %s", resultSet.getLong("ISBN"), resultSet.getString("Title"), resultSet.getString("Genre"), resultSet.getString("Author")));
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());

@@ -13,19 +13,14 @@ public abstract class Manager {
 	
 	// Constructor to initialize the manager, connect to the database, and display the menu
 	public Manager(Connection conn, Statement stmt) {
-		try {
 			this.conn = conn;
 			this.stmt = stmt;
 			displayMenu();
-		} catch (Throwable e) {
-			System.out.println("Error initializing manager: " + e.getMessage());
-			e.printStackTrace();
-		}
 	}
 	
 	// Abstract methods to be implemented by the other Manager classes
 	public abstract void displayMenu();
-	public abstract void add() throws Throwable;
+	public abstract void add();
 	public abstract void remove();
 	public abstract void update();
 	public abstract void search();

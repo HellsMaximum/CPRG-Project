@@ -46,10 +46,12 @@ public class CheckoutManager extends Manager {
 			PreparedStatement stmt = conn.prepareStatement(sqlStmt);
 			ResultSet resultSet = stmt.executeQuery();
 			while (resultSet.next()) {
-				System.out.println("ISBN: " + resultSet.getInt("ISBN"));
-				System.out.println("Title: " + resultSet.getString("Title"));
-				System.out.println("Genre: " + resultSet.getString("Genre"));
-				System.out.println("Author: " + resultSet.getString("Author"));
+				System.out.println("Checkout ID: " + resultSet.getInt("CheckoutID"));
+				System.out.println("Checkout Date: " + resultSet.getString("CheckoutDate"));
+				System.out.println("Return Date: " + resultSet.getString("ReturnDate"));
+				System.out.println("Member ID: " + resultSet.getString("MemberID"));
+				System.out.println("Book ISBN: " + resultSet.getString("BookISBN"));
+				System.out.println("Book Returned: " + resultSet.getString("BookReturned"));
 				System.out.println();
 			}
 		} catch (SQLException e) {
