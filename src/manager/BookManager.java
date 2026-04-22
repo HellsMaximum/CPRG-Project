@@ -62,48 +62,70 @@ public class BookManager extends Manager {
 	// Includes error handling for the ISBN, title, genre, and author inputs using the custom exceptions created in the errors package
 	@Override
 	public void add() throws Throwable {
+		// get the isbn the user wants to add
 		int isbn;
 		System.out.println("Enter ISBN: ");
 		String isbnString = keyboard.nextLine();
+		// Check if the ISBN is valid
 		if (isbnString.length() != 13 || !isbnString.matches("\\d+")) {
 			throw new ISBNException();
 		}
 		else {
 			isbn = Integer.parseInt(isbnString);
 		}
-		
-		System.out.println("Enter Book Title: ");
-		String title = keyboard.nextLine();
-		if (title.length() > 75) {
-			throw new CharacterLimitException("Book title cannot exceed 75 characters.");
-		}
-		
-		System.out.println("Enter Genre: ");
-		String genre = keyboard.nextLine();
-		if (genre.length() > 75) {
-			throw new CharacterLimitException("Genre cannot exceed 75 characters.");
-		}
-		
-		System.out.println("Enter Author: ");
-		String author = keyboard.nextLine();
-		if (author.length() > 75) {
-			throw new CharacterLimitException("Author name cannot exceed 75 characters.");
-		}
-		
-		String sqlStmt = "INSERT INTO Book (ISBN, Title, Genre, Author) VALUES (?, ?, ?, ?)";
+
+		// Select the book with the matching ISBN
+		String sqlStmt = "SELECT * FROM BOOK WHERE ISBN = ?";
+
 		try {
+			// Check if the ISBN already exists in the database
 			PreparedStatement stmt = conn.prepareStatement(sqlStmt);
 			stmt.setInt(1, isbn);
-			stmt.setString(2, title);
-			stmt.setString(3, genre);
-			stmt.setString(4, author);
-			// Execute the insert operation
-	        int row = stmt.executeUpdate();
-
-	        // Show how many rows were inserted
-	        System.out.println(row + " record inserted.");
-			
+			ResultSet resultSet = stmt.executeQuery();
+			boolean found = false;
+			// Check if the ISBN is valid
+			if (resultSet.next()) {
+				found = true;
+			}
+			// if the book is found, error out and return to menu
+			if(found) {
+				throw new ISBNException("Book with ISBN: " + isbn + " already exists.");
+			} 
+			else{
+				System.out.println("Enter Book Title: ");
+				String title = keyboard.nextLine();
+				if (title.length() > 75) {
+					throw new CharacterLimitException("Book title cannot exceed 75 characters.");
+				}
+				
+				System.out.println("Enter Genre: ");
+				String genre = keyboard.nextLine();
+				if (genre.length() > 75) {
+					throw new CharacterLimitException("Genre cannot exceed 75 characters.");
+				}
+				
+				System.out.println("Enter Author: ");
+				String author = keyboard.nextLine();
+				if (author.length() > 75) {
+					throw new CharacterLimitException("Author name cannot exceed 75 characters.");
+				}
+				
+				String sqlStmt = "INSERT INTO Book (ISBN, Title, Genre, Author) VALUES (?, ?, ?, ?)";
+				
+				PreparedStatement stmt = conn.prepareStatement(sqlStmt);
+				stmt.setInt(1, isbn);
+				stmt.setString(2, title);
+				stmt.setString(3, genre);
+				stmt.setString(4, author);
+				// Execute the insert operation
+				int row = stmt.executeUpdate();
+	
+				// Show how many rows were inserted
+				System.out.println(row + " record inserted.");	
+			}
 		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} catch (ISBNException | CharacterLimitException e) {
 			System.out.println(e.getMessage());
 		}
 	}
