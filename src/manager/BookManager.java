@@ -130,9 +130,40 @@ public class BookManager extends Manager {
 		}
 	}
 
+	// method to remove a book from the databse based on the ISBN input from the user
 	@Override
 	public void remove() {
-		// TODO Auto-generated method stub
+		System.out.println("Enter ISBN of book to remove: ");
+		int isbn = Integer.parseInt(keyboard.nextLine());
+
+		String sqlStmt = "SELECT * FROM BOOK WHERE ISBN = ?";
+		// Verify that the book exists before attempting to delete it
+		try {
+			PreparedStatement stmt = conn.prepareStatement(sqlStmt);
+			stmt.setInt(1, isbn);
+			ResultSet resultSet = stmt.executeQuery();
+			boolean found = false;
+			// Check if the ISBN is valid
+			if (resultSet.next()) {
+				found = true;
+			}
+			// if the book is not found error out and return to menu
+			if (!found){
+				throw new ISBNException("Book with ISBN: " + isbn + " was not found.");
+			}
+			// if the book is found, delete it from the database and return to the menu
+			else {
+				sqlStmt = "DELETE FROM BOOK WHERE ISBN = ?";
+				PreparedStatement deleteStmt = conn.prepareStatement(sqlStmt);
+				deleteStmt.setInt(1, isbn);
+				int rowsDeleted = deleteStmt.executeUpdate();
+				System.out.println(rowsDeleted + " record(s) deleted.");
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} catch (ISBNException e) {
+			System.out.println(e.getMessage());
+		}
 		
 	}
 
