@@ -160,7 +160,7 @@ public class BookManager extends Manager {
 							throw new CharacterLimitException("Book title cannot exceed 75 characters.");
 						}
 						else {
-							PreparedStatement stmt = conn.prepareStatement(sqlStmt);
+							stmt = conn.prepareStatement(sqlStmt);
 							stmt.setString(1, newTitle);
 							stmt.setInt(2, isbnToUpdate);
 							int row = stmt.executeUpdate();
@@ -174,7 +174,7 @@ public class BookManager extends Manager {
 							throw new CharacterLimitException("Genre cannot exceed 75 characters.");
 						}
 						else {
-							PreparedStatement stmt = conn.prepareStatement(sqlStmt);
+							stmt = conn.prepareStatement(sqlStmt);
 							stmt.setString(1, newGenre);
 							stmt.setInt(2, isbnToUpdate);
 							int row = stmt.executeUpdate();
@@ -188,7 +188,7 @@ public class BookManager extends Manager {
 							throw new CharacterLimitException("Author name cannot exceed 75 characters.");
 						}
 						else {
-							PreparedStatement stmt = conn.prepareStatement(sqlStmt);
+							stmt = conn.prepareStatement(sqlStmt);
 							stmt.setString(1, newAuthor);
 							stmt.setInt(2, isbnToUpdate);
 							int row = stmt.executeUpdate();
