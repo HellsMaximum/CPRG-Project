@@ -115,7 +115,7 @@ public class BookManager extends Manager {
 	}
 
 	@Override
-	public void update() throws Throwable {
+	public void update(){
 		// get the user to input the ISBN of the book they want to update
 		System.out.println("Enter ISBN of the book to update: ");
 		int isbnToUpdate = Integer.parseInt(keyboard.nextLine());
@@ -123,7 +123,7 @@ public class BookManager extends Manager {
 		// Select the book with the matching ISBN
 		String sqlStmt = "SELECT * FROM BOOK WHERE ISBN = ?";
 		
-		sqlSearch : try {
+		try {
 			PreparedStatement stmt = conn.prepareStatement(sqlStmt);
 			stmt.setInt(1, isbnToUpdate);
 			ResultSet resultSet = stmt.executeQuery();
@@ -159,6 +159,13 @@ public class BookManager extends Manager {
 						if (newTitle.length() > 75) {
 							throw new CharacterLimitException("Book title cannot exceed 75 characters.");
 						}
+						else {
+							PreparedStatement stmt = conn.prepareStatement(sqlStmt);
+							stmt.setString(1, newTitle);
+							stmt.setInt(2, isbnToUpdate);
+							int row = stmt.executeUpdate();
+							System.out.println(row + " record(s) updated.");
+						}
 						break;
 					case 2:
 						System.out.println("Enter new genre: ");
@@ -166,12 +173,26 @@ public class BookManager extends Manager {
 						if (newGenre.length() > 75) {
 							throw new CharacterLimitException("Genre cannot exceed 75 characters.");
 						}
+						else {
+							PreparedStatement stmt = conn.prepareStatement(sqlStmt);
+							stmt.setString(1, newGenre);
+							stmt.setInt(2, isbnToUpdate);
+							int row = stmt.executeUpdate();
+							System.out.println(row + " record(s) updated.");
+						}
 						break;
 					case 3:
 						System.out.println("Enter new author: ");
 						String newAuthor = keyboard.nextLine();
 						if (newAuthor.length() > 75) {
 							throw new CharacterLimitException("Author name cannot exceed 75 characters.");
+						}
+						else {
+							PreparedStatement stmt = conn.prepareStatement(sqlStmt);
+							stmt.setString(1, newAuthor);
+							stmt.setInt(2, isbnToUpdate);
+							int row = stmt.executeUpdate();
+							System.out.println(row + " record(s) updated.");
 						}
 						break;
 					default:

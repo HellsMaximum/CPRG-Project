@@ -53,6 +53,6 @@ public abstract class Manager {
 	public abstract void createTable() throws SQLException;
 	public abstract void add() throws Throwable;
 	public abstract void remove();
-	public abstract void update() throws Throwable;
+	public abstract void update();
 	public abstract void search();
 }
