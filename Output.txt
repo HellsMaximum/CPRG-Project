@@ -1,0 +1,976 @@
+Connection to DB established.
+1) Manage Books.
+2) Manage Members.
+3) Manage Checkouts.
+4) Create Tables.
+5) Delete Tables.
+6) Exit program.
+1
+Book Manager Menu:
+1) Add new book.
+2) Search for a book.
+3) Update existing book.
+4) Remove existing book.
+5) View all books.
+6) Exit book manager.
+5
+ISBN: 1111111111111 Title: Test Book One Genre: Fiction Author: Test Author
+
+ISBN: 2222222222222 Title: Test Book Two Genre: Programming Author: Test Author
+
+ISBN: 3333333333333 Title: Test Book Three Genre: Technology Author: Test Author
+
+ISBN: 4444444444444 Title: Test Book Four Genre: Education Author: Test Author
+
+ISBN: 5555555555555 Title: Test Book Five Genre: Fiction Author: Test Author
+
+ISBN: 9780061120084 Title: To Kill a Mockingbird Genre: Fiction Author: Harper Lee
+
+ISBN: 9780132350884 Title: Clean Code Genre: Programming Author: Robert C. Martin
+
+ISBN: 9780134494166 Title: Clean Architecture Genre: Programming Author: Robert C. Martin
+
+ISBN: 9780134685991 Title: Effective Java Genre: Programming Author: Joshua Bloch
+
+ISBN: 9780201633610 Title: Design Patterns Genre: Programming Author: Erich Gamma
+
+ISBN: 9780262033848 Title: Introduction to Algorithms Genre: Education Author: Thomas H. Cormen
+
+ISBN: 9780321356680 Title: Effective C++ Genre: Programming Author: Scott Meyers
+
+ISBN: 9780596009205 Title: Head First Java Genre: Programming Author: Kathy Sierra
+
+ISBN: 9780743273565 Title: The Great Gatsby Genre: Fiction Author: F. Scott Fitzgerald
+
+ISBN: 9781449355739 Title: Learning Python Genre: Programming Author: Mark Lutz
+
+ISBN: 9781491950357 Title: Designing Data-Intensive Applications Genre: Technology Author: Martin Kleppmann
+
+ISBN: 9781617294945 Title: Spring in Action Genre: Technology Author: Craig Walls
+
+Book Manager Menu:
+1) Add new book.
+2) Search for a book.
+3) Update existing book.
+4) Remove existing book.
+5) View all books.
+6) Exit book manager.
+1
+Enter ISBN: 
+1123
+ISBN must be 13 characters long and only contain numeric characters.
+Book Manager Menu:
+1) Add new book.
+2) Search for a book.
+3) Update existing book.
+4) Remove existing book.
+5) View all books.
+6) Exit book manager.
+1
+Enter ISBN: 
+a
+ISBN must be 13 characters long and only contain numeric characters.
+Book Manager Menu:
+1) Add new book.
+2) Search for a book.
+3) Update existing book.
+4) Remove existing book.
+5) View all books.
+6) Exit book manager.
+1
+Enter ISBN: 
+1234567890123
+Enter Book Title: 
+bugs and stuff
+Enter Genre: 
+insects
+Enter Author: 
+Big Bug
+1 record inserted.
+Book Manager Menu:
+1) Add new book.
+2) Search for a book.
+3) Update existing book.
+4) Remove existing book.
+5) View all books.
+6) Exit book manager.
+2
+Enter how you want to search for a book: 
+1) ISBN 
+2) Title 
+3) Genre 
+4) Author
+1
+Enter ISBN: 
+1234567890123
+ISBN: 1234567890123 Title: bugs and stuff Genre: insects Author: Big Bug
+
+Book Manager Menu:
+1) Add new book.
+2) Search for a book.
+3) Update existing book.
+4) Remove existing book.
+5) View all books.
+6) Exit book manager.
+2
+Enter how you want to search for a book: 
+1) ISBN 
+2) Title 
+3) Genre 
+4) Author
+2
+Enter Title: 
+Clean Code
+ISBN: 9780132350884 Title: Clean Code Genre: Programming Author: Robert C. Martin
+
+Book Manager Menu:
+1) Add new book.
+2) Search for a book.
+3) Update existing book.
+4) Remove existing book.
+5) View all books.
+6) Exit book manager.
+2
+Enter how you want to search for a book: 
+1) ISBN 
+2) Title 
+3) Genre 
+4) Author
+3
+Enter Genre: 
+programming
+ISBN: 2222222222222 Title: Test Book Two Genre: Programming Author: Test Author
+
+ISBN: 9780132350884 Title: Clean Code Genre: Programming Author: Robert C. Martin
+
+ISBN: 9780134494166 Title: Clean Architecture Genre: Programming Author: Robert C. Martin
+
+ISBN: 9780134685991 Title: Effective Java Genre: Programming Author: Joshua Bloch
+
+ISBN: 9780201633610 Title: Design Patterns Genre: Programming Author: Erich Gamma
+
+ISBN: 9780321356680 Title: Effective C++ Genre: Programming Author: Scott Meyers
+
+ISBN: 9780596009205 Title: Head First Java Genre: Programming Author: Kathy Sierra
+
+ISBN: 9781449355739 Title: Learning Python Genre: Programming Author: Mark Lutz
+
+Book Manager Menu:
+1) Add new book.
+2) Search for a book.
+3) Update existing book.
+4) Remove existing book.
+5) View all books.
+6) Exit book manager.
+3
+Enter ISBN of the book to update: 
+1234567890123
+ISBN: 1234567890123 Title: bugs and stuff Genre: insects Author: Big Bug
+
+Select element to update: 
+1) Title 
+2) Genre 
+3) Author
+1
+Enter new title: 
+no bugs
+1 record(s) updated.
+Book Manager Menu:
+1) Add new book.
+2) Search for a book.
+3) Update existing book.
+4) Remove existing book.
+5) View all books.
+6) Exit book manager.
+2
+Enter how you want to search for a book: 
+1) ISBN 
+2) Title 
+3) Genre 
+4) Author
+4
+Enter Author: 
+Test Author
+ISBN: 1111111111111 Title: Test Book One Genre: Fiction Author: Test Author
+
+ISBN: 2222222222222 Title: Test Book Two Genre: Programming Author: Test Author
+
+ISBN: 3333333333333 Title: Test Book Three Genre: Technology Author: Test Author
+
+ISBN: 4444444444444 Title: Test Book Four Genre: Education Author: Test Author
+
+ISBN: 5555555555555 Title: Test Book Five Genre: Fiction Author: Test Author
+
+Book Manager Menu:
+1) Add new book.
+2) Search for a book.
+3) Update existing book.
+4) Remove existing book.
+5) View all books.
+6) Exit book manager.
+3
+Enter ISBN of the book to update: 
+1111111111111
+Book with ISBN: 1111111111111 cannot be updated because it is currently checked out.
+Book Manager Menu:
+1) Add new book.
+2) Search for a book.
+3) Update existing book.
+4) Remove existing book.
+5) View all books.
+6) Exit book manager.
+5
+ISBN: 1111111111111 Title: Test Book One Genre: Fiction Author: Test Author
+
+ISBN: 1234567890123 Title: no bugs Genre: insects Author: Big Bug
+
+ISBN: 2222222222222 Title: Test Book Two Genre: Programming Author: Test Author
+
+ISBN: 3333333333333 Title: Test Book Three Genre: Technology Author: Test Author
+
+ISBN: 4444444444444 Title: Test Book Four Genre: Education Author: Test Author
+
+ISBN: 5555555555555 Title: Test Book Five Genre: Fiction Author: Test Author
+
+ISBN: 9780061120084 Title: To Kill a Mockingbird Genre: Fiction Author: Harper Lee
+
+ISBN: 9780132350884 Title: Clean Code Genre: Programming Author: Robert C. Martin
+
+ISBN: 9780134494166 Title: Clean Architecture Genre: Programming Author: Robert C. Martin
+
+ISBN: 9780134685991 Title: Effective Java Genre: Programming Author: Joshua Bloch
+
+ISBN: 9780201633610 Title: Design Patterns Genre: Programming Author: Erich Gamma
+
+ISBN: 9780262033848 Title: Introduction to Algorithms Genre: Education Author: Thomas H. Cormen
+
+ISBN: 9780321356680 Title: Effective C++ Genre: Programming Author: Scott Meyers
+
+ISBN: 9780596009205 Title: Head First Java Genre: Programming Author: Kathy Sierra
+
+ISBN: 9780743273565 Title: The Great Gatsby Genre: Fiction Author: F. Scott Fitzgerald
+
+ISBN: 9781449355739 Title: Learning Python Genre: Programming Author: Mark Lutz
+
+ISBN: 9781491950357 Title: Designing Data-Intensive Applications Genre: Technology Author: Martin Kleppmann
+
+ISBN: 9781617294945 Title: Spring in Action Genre: Technology Author: Craig Walls
+
+Book Manager Menu:
+1) Add new book.
+2) Search for a book.
+3) Update existing book.
+4) Remove existing book.
+5) View all books.
+6) Exit book manager.
+4
+Enter ISBN of book to remove: 
+1234567890123
+1 record(s) deleted.
+Book Manager Menu:
+1) Add new book.
+2) Search for a book.
+3) Update existing book.
+4) Remove existing book.
+5) View all books.
+6) Exit book manager.
+5
+ISBN: 1111111111111 Title: Test Book One Genre: Fiction Author: Test Author
+
+ISBN: 2222222222222 Title: Test Book Two Genre: Programming Author: Test Author
+
+ISBN: 3333333333333 Title: Test Book Three Genre: Technology Author: Test Author
+
+ISBN: 4444444444444 Title: Test Book Four Genre: Education Author: Test Author
+
+ISBN: 5555555555555 Title: Test Book Five Genre: Fiction Author: Test Author
+
+ISBN: 9780061120084 Title: To Kill a Mockingbird Genre: Fiction Author: Harper Lee
+
+ISBN: 9780132350884 Title: Clean Code Genre: Programming Author: Robert C. Martin
+
+ISBN: 9780134494166 Title: Clean Architecture Genre: Programming Author: Robert C. Martin
+
+ISBN: 9780134685991 Title: Effective Java Genre: Programming Author: Joshua Bloch
+
+ISBN: 9780201633610 Title: Design Patterns Genre: Programming Author: Erich Gamma
+
+ISBN: 9780262033848 Title: Introduction to Algorithms Genre: Education Author: Thomas H. Cormen
+
+ISBN: 9780321356680 Title: Effective C++ Genre: Programming Author: Scott Meyers
+
+ISBN: 9780596009205 Title: Head First Java Genre: Programming Author: Kathy Sierra
+
+ISBN: 9780743273565 Title: The Great Gatsby Genre: Fiction Author: F. Scott Fitzgerald
+
+ISBN: 9781449355739 Title: Learning Python Genre: Programming Author: Mark Lutz
+
+ISBN: 9781491950357 Title: Designing Data-Intensive Applications Genre: Technology Author: Martin Kleppmann
+
+ISBN: 9781617294945 Title: Spring in Action Genre: Technology Author: Craig Walls
+
+Book Manager Menu:
+1) Add new book.
+2) Search for a book.
+3) Update existing book.
+4) Remove existing book.
+5) View all books.
+6) Exit book manager.
+6
+Returning to main menu.
+1) Manage Books.
+2) Manage Members.
+3) Manage Checkouts.
+4) Create Tables.
+5) Delete Tables.
+6) Exit program.
+2
+Initializing Member Manager...
+Member Manager Menu:
+1) Add new member.
+2) Search for a member.
+3) Update existing member.
+4) Remove existing member.
+5) View all members.
+6) Exit member manager.
+1
+Enter the new members first name:
+Doug
+Enter the new members last name:
+Dickens
+Member added successfully.
+Member Manager Menu:
+1) Add new member.
+2) Search for a member.
+3) Update existing member.
+4) Remove existing member.
+5) View all members.
+6) Exit member manager.
+2
+Search menu: 
+1) Search by Member ID 
+2) Search by First Name 
+3) Search by Last Name
+1
+Enter the Member ID to search for:
+4
+Member ID: 4 First Name: Jordan Last Name: Smith
+
+Member Manager Menu:
+1) Add new member.
+2) Search for a member.
+3) Update existing member.
+4) Remove existing member.
+5) View all members.
+6) Exit member manager.
+2
+Search menu: 
+1) Search by Member ID 
+2) Search by First Name 
+3) Search by Last Name
+2
+Enter the First Name to search for:
+Dickens
+No members found with the given First Name.
+Member Manager Menu:
+1) Add new member.
+2) Search for a member.
+3) Update existing member.
+4) Remove existing member.
+5) View all members.
+6) Exit member manager.
+2
+Search menu: 
+1) Search by Member ID 
+2) Search by First Name 
+3) Search by Last Name
+3
+Enter the Last Name to search for:
+Dickens
+Member ID: 18 First Name: Doug Last Name: Dickens
+
+Member Manager Menu:
+1) Add new member.
+2) Search for a member.
+3) Update existing member.
+4) Remove existing member.
+5) View all members.
+6) Exit member manager.
+5
+Member ID: 1 First Name: Alice Last Name: Nguyen
+
+Member ID: 2 First Name: Marcus Last Name: Lee
+
+Member ID: 3 First Name: Priya Last Name: Patel
+
+Member ID: 4 First Name: Jordan Last Name: Smith
+
+Member ID: 5 First Name: Emily Last Name: Chen
+
+Member ID: 6 First Name: Noah Last Name: Brown
+
+Member ID: 7 First Name: Sophia Last Name: Garcia
+
+Member ID: 8 First Name: Daniel Last Name: Wilson
+
+Member ID: 9 First Name: Olivia Last Name: Taylor
+
+Member ID: 10 First Name: Liam Last Name: Anderson
+
+Member ID: 11 First Name: Alice Last Name: Smith
+
+Member ID: 12 First Name: Marcus Last Name: Nguyen
+
+Member ID: 13 First Name: Test Last Name: User
+
+Member ID: 14 First Name: Test Last Name: User
+
+Member ID: 15 First Name: Test Last Name: User
+
+Member ID: 18 First Name: Doug Last Name: Dickens
+
+Member Manager Menu:
+1) Add new member.
+2) Search for a member.
+3) Update existing member.
+4) Remove existing member.
+5) View all members.
+6) Exit member manager.
+4
+Enter the Member ID of the member being removed: 
+1
+Member with ID: 1 cannot be deleted because they have outstanding checkouts.
+Member Manager Menu:
+1) Add new member.
+2) Search for a member.
+3) Update existing member.
+4) Remove existing member.
+5) View all members.
+6) Exit member manager.
+4
+Enter the Member ID of the member being removed: 
+18
+Member with ID: 18 was successfully removed.
+Member Manager Menu:
+1) Add new member.
+2) Search for a member.
+3) Update existing member.
+4) Remove existing member.
+5) View all members.
+6) Exit member manager.
+5
+Member ID: 1 First Name: Alice Last Name: Nguyen
+
+Member ID: 2 First Name: Marcus Last Name: Lee
+
+Member ID: 3 First Name: Priya Last Name: Patel
+
+Member ID: 4 First Name: Jordan Last Name: Smith
+
+Member ID: 5 First Name: Emily Last Name: Chen
+
+Member ID: 6 First Name: Noah Last Name: Brown
+
+Member ID: 7 First Name: Sophia Last Name: Garcia
+
+Member ID: 8 First Name: Daniel Last Name: Wilson
+
+Member ID: 9 First Name: Olivia Last Name: Taylor
+
+Member ID: 10 First Name: Liam Last Name: Anderson
+
+Member ID: 11 First Name: Alice Last Name: Smith
+
+Member ID: 12 First Name: Marcus Last Name: Nguyen
+
+Member ID: 13 First Name: Test Last Name: User
+
+Member ID: 14 First Name: Test Last Name: User
+
+Member ID: 15 First Name: Test Last Name: User
+
+Member Manager Menu:
+1) Add new member.
+2) Search for a member.
+3) Update existing member.
+4) Remove existing member.
+5) View all members.
+6) Exit member manager.
+a
+Invalid input. Please enter a number between 1 and 6.
+7
+Invalid input. Please enter a number between 1 and 6.
+6
+Returning to main menu.
+1) Manage Books.
+2) Manage Members.
+3) Manage Checkouts.
+4) Create Tables.
+5) Delete Tables.
+6) Exit program.
+7
+Invalid input. Please enter 1 to 6.
+1) Manage Books.
+2) Manage Members.
+3) Manage Checkouts.
+4) Create Tables.
+5) Delete Tables.
+6) Exit program.
+3
+Checkout Manager Menu:
+1) New Checkout
+2) Return Book
+3) Update Checkout
+4) Search Checkouts
+5) View All Checkouts
+6) Return to Main Menu
+5
+Checkout ID: 2 Checkout Date: 2026-04-18 Return Date: 2026-04-25 Member ID: 2 Book ISBN: 9780132350884
+
+Checkout ID: 3 Checkout Date: 2026-04-20 Return Date: 2026-04-27 Member ID: 3 Book ISBN: 9781491950357
+
+Checkout ID: 4 Checkout Date: 2026-04-10 Return Date: 2026-04-17 Member ID: 4 Book ISBN: 9780262033848
+
+Checkout ID: 5 Checkout Date: 2026-04-12 Return Date: 2026-04-19 Member ID: 5 Book ISBN: 9780596009205
+
+Checkout ID: 6 Checkout Date: 2026-04-14 Return Date: 2026-04-21 Member ID: 6 Book ISBN: 9780134494166
+
+Checkout ID: 7 Checkout Date: 2026-04-15 Return Date: 2026-04-22 Member ID: 7 Book ISBN: 9781617294945
+
+Checkout ID: 8 Checkout Date: 2026-04-17 Return Date: 2026-04-24 Member ID: 8 Book ISBN: 9780201633610
+
+Checkout ID: 9 Checkout Date: 2026-04-19 Return Date: 2026-04-26 Member ID: 9 Book ISBN: 9780321356680
+
+Checkout ID: 10 Checkout Date: 2026-04-21 Return Date: 2026-04-28 Member ID: 10 Book ISBN: 9781449355739
+
+Checkout ID: 11 Checkout Date: 2026-04-22 Return Date: 2026-04-29 Member ID: 11 Book ISBN: 1111111111111
+
+Checkout ID: 12 Checkout Date: 2026-04-22 Return Date: 2026-04-29 Member ID: 12 Book ISBN: 2222222222222
+
+Checkout ID: 13 Checkout Date: 2026-04-23 Return Date: 2026-04-30 Member ID: 13 Book ISBN: 3333333333333
+
+Checkout ID: 14 Checkout Date: 2026-04-23 Return Date: 2026-04-30 Member ID: 14 Book ISBN: 4444444444444
+
+Checkout ID: 15 Checkout Date: 2026-04-23 Return Date: 2026-04-30 Member ID: 15 Book ISBN: 5555555555555
+
+Checkout ID: 16 Checkout Date: 2026-04-01 Return Date: 2026-04-08 Member ID: 1 Book ISBN: 1111111111111
+
+Checkout ID: 17 Checkout Date: 2026-04-02 Return Date: 2026-04-09 Member ID: 2 Book ISBN: 2222222222222
+
+Checkout Manager Menu:
+1) New Checkout
+2) Return Book
+3) Update Checkout
+4) Search Checkouts
+5) View All Checkouts
+6) Return to Main Menu
+1
+Enter the Member ID of the member checking out the book:
+1111111111111
+Member not found. Please enter a valid Member ID.
+Checkout Manager Menu:
+1) New Checkout
+2) Return Book
+3) Update Checkout
+4) Search Checkouts
+5) View All Checkouts
+6) Return to Main Menu
+1
+Enter the Member ID of the member checking out the book:
+4
+Enter the ISBN of the book being checked out:
+1111111111111
+Checkout created successfully.
+Checkout Manager Menu:
+1) New Checkout
+2) Return Book
+3) Update Checkout
+4) Search Checkouts
+5) View All Checkouts
+6) Return to Main Menu
+5
+Checkout ID: 2 Checkout Date: 2026-04-18 Return Date: 2026-04-25 Member ID: 2 Book ISBN: 9780132350884
+
+Checkout ID: 3 Checkout Date: 2026-04-20 Return Date: 2026-04-27 Member ID: 3 Book ISBN: 9781491950357
+
+Checkout ID: 4 Checkout Date: 2026-04-10 Return Date: 2026-04-17 Member ID: 4 Book ISBN: 9780262033848
+
+Checkout ID: 5 Checkout Date: 2026-04-12 Return Date: 2026-04-19 Member ID: 5 Book ISBN: 9780596009205
+
+Checkout ID: 6 Checkout Date: 2026-04-14 Return Date: 2026-04-21 Member ID: 6 Book ISBN: 9780134494166
+
+Checkout ID: 7 Checkout Date: 2026-04-15 Return Date: 2026-04-22 Member ID: 7 Book ISBN: 9781617294945
+
+Checkout ID: 8 Checkout Date: 2026-04-17 Return Date: 2026-04-24 Member ID: 8 Book ISBN: 9780201633610
+
+Checkout ID: 9 Checkout Date: 2026-04-19 Return Date: 2026-04-26 Member ID: 9 Book ISBN: 9780321356680
+
+Checkout ID: 10 Checkout Date: 2026-04-21 Return Date: 2026-04-28 Member ID: 10 Book ISBN: 9781449355739
+
+Checkout ID: 11 Checkout Date: 2026-04-22 Return Date: 2026-04-29 Member ID: 11 Book ISBN: 1111111111111
+
+Checkout ID: 12 Checkout Date: 2026-04-22 Return Date: 2026-04-29 Member ID: 12 Book ISBN: 2222222222222
+
+Checkout ID: 13 Checkout Date: 2026-04-23 Return Date: 2026-04-30 Member ID: 13 Book ISBN: 3333333333333
+
+Checkout ID: 14 Checkout Date: 2026-04-23 Return Date: 2026-04-30 Member ID: 14 Book ISBN: 4444444444444
+
+Checkout ID: 15 Checkout Date: 2026-04-23 Return Date: 2026-04-30 Member ID: 15 Book ISBN: 5555555555555
+
+Checkout ID: 16 Checkout Date: 2026-04-01 Return Date: 2026-04-08 Member ID: 1 Book ISBN: 1111111111111
+
+Checkout ID: 17 Checkout Date: 2026-04-02 Return Date: 2026-04-09 Member ID: 2 Book ISBN: 2222222222222
+
+Checkout ID: 18 Checkout Date: 2026-04-23 Return Date: 2026-04-30 Member ID: 4 Book ISBN: 1111111111111
+
+Checkout Manager Menu:
+1) New Checkout
+2) Return Book
+3) Update Checkout
+4) Search Checkouts
+5) View All Checkouts
+6) Return to Main Menu
+4
+Search menu: 
+1) Search by Checkout Date 
+2) Search by Return Date 
+3) Search by Member ID 
+4) Search by Book ISBN
+1
+Enter the checkout date you want to search for (YYYY-MM-DD):
+2026-04-23
+Checkout ID: 13 Checkout Date: 2026-04-23 Return Date: 2026-04-30 Member ID: 13 Book ISBN: 3333333333333
+
+Checkout ID: 14 Checkout Date: 2026-04-23 Return Date: 2026-04-30 Member ID: 14 Book ISBN: 4444444444444
+
+Checkout ID: 15 Checkout Date: 2026-04-23 Return Date: 2026-04-30 Member ID: 15 Book ISBN: 5555555555555
+
+Checkout ID: 18 Checkout Date: 2026-04-23 Return Date: 2026-04-30 Member ID: 4 Book ISBN: 1111111111111
+
+Checkout Manager Menu:
+1) New Checkout
+2) Return Book
+3) Update Checkout
+4) Search Checkouts
+5) View All Checkouts
+6) Return to Main Menu
+2
+Enter the Checkout ID of the book being returned:
+18
+Book returned on time. No late fee.
+
+Checkout Manager Menu:
+1) New Checkout
+2) Return Book
+3) Update Checkout
+4) Search Checkouts
+5) View All Checkouts
+6) Return to Main Menu
+2
+Enter the Checkout ID of the book being returned:
+6
+The book is being returned is overdue. The late fee is: $10.0
+
+Checkout Manager Menu:
+1) New Checkout
+2) Return Book
+3) Update Checkout
+4) Search Checkouts
+5) View All Checkouts
+6) Return to Main Menu
+2
+Enter the Checkout ID of the book being returned:
+4
+The book is being returned is overdue. The late fee is: $30.0
+
+Checkout Manager Menu:
+1) New Checkout
+2) Return Book
+3) Update Checkout
+4) Search Checkouts
+5) View All Checkouts
+6) Return to Main Menu
+5
+Checkout ID: 2 Checkout Date: 2026-04-18 Return Date: 2026-04-25 Member ID: 2 Book ISBN: 9780132350884
+
+Checkout ID: 3 Checkout Date: 2026-04-20 Return Date: 2026-04-27 Member ID: 3 Book ISBN: 9781491950357
+
+Checkout ID: 5 Checkout Date: 2026-04-12 Return Date: 2026-04-19 Member ID: 5 Book ISBN: 9780596009205
+
+Checkout ID: 7 Checkout Date: 2026-04-15 Return Date: 2026-04-22 Member ID: 7 Book ISBN: 9781617294945
+
+Checkout ID: 8 Checkout Date: 2026-04-17 Return Date: 2026-04-24 Member ID: 8 Book ISBN: 9780201633610
+
+Checkout ID: 9 Checkout Date: 2026-04-19 Return Date: 2026-04-26 Member ID: 9 Book ISBN: 9780321356680
+
+Checkout ID: 10 Checkout Date: 2026-04-21 Return Date: 2026-04-28 Member ID: 10 Book ISBN: 9781449355739
+
+Checkout ID: 11 Checkout Date: 2026-04-22 Return Date: 2026-04-29 Member ID: 11 Book ISBN: 1111111111111
+
+Checkout ID: 12 Checkout Date: 2026-04-22 Return Date: 2026-04-29 Member ID: 12 Book ISBN: 2222222222222
+
+Checkout ID: 13 Checkout Date: 2026-04-23 Return Date: 2026-04-30 Member ID: 13 Book ISBN: 3333333333333
+
+Checkout ID: 14 Checkout Date: 2026-04-23 Return Date: 2026-04-30 Member ID: 14 Book ISBN: 4444444444444
+
+Checkout ID: 15 Checkout Date: 2026-04-23 Return Date: 2026-04-30 Member ID: 15 Book ISBN: 5555555555555
+
+Checkout ID: 16 Checkout Date: 2026-04-01 Return Date: 2026-04-08 Member ID: 1 Book ISBN: 1111111111111
+
+Checkout ID: 17 Checkout Date: 2026-04-02 Return Date: 2026-04-09 Member ID: 2 Book ISBN: 2222222222222
+
+Checkout Manager Menu:
+1) New Checkout
+2) Return Book
+3) Update Checkout
+4) Search Checkouts
+5) View All Checkouts
+6) Return to Main Menu
+4
+Search menu: 
+1) Search by Checkout Date 
+2) Search by Return Date 
+3) Search by Member ID 
+4) Search by Book ISBN
+3
+Enter the Member ID for the member's checkouts you want to search for:
+7
+Checkout ID: 7 Checkout Date: 2026-04-15 Return Date: 2026-04-22 Member ID: 7 Book ISBN: 9781617294945
+
+Checkout Manager Menu:
+1) New Checkout
+2) Return Book
+3) Update Checkout
+4) Search Checkouts
+5) View All Checkouts
+6) Return to Main Menu
+4
+Search menu: 
+1) Search by Checkout Date 
+2) Search by Return Date 
+3) Search by Member ID 
+4) Search by Book ISBN
+2
+Enter the return date you want to search for (YYYY-MM-DD):
+2020
+Invalid date format. Please enter the date in the format YYYY-MM-DD.
+Checkout Manager Menu:
+1) New Checkout
+2) Return Book
+3) Update Checkout
+4) Search Checkouts
+5) View All Checkouts
+6) Return to Main Menu
+6
+Returning to Main Menu...
+1) Manage Books.
+2) Manage Members.
+3) Manage Checkouts.
+4) Create Tables.
+5) Delete Tables.
+6) Exit program.
+4
+Tables created successfully.
+1) Manage Books.
+2) Manage Members.
+3) Manage Checkouts.
+4) Create Tables.
+5) Delete Tables.
+6) Exit program.
+1
+Book Manager Menu:
+1) Add new book.
+2) Search for a book.
+3) Update existing book.
+4) Remove existing book.
+5) View all books.
+6) Exit book manager.
+5
+ISBN: 1111111111111 Title: Test Book One Genre: Fiction Author: Test Author
+
+ISBN: 2222222222222 Title: Test Book Two Genre: Programming Author: Test Author
+
+ISBN: 3333333333333 Title: Test Book Three Genre: Technology Author: Test Author
+
+ISBN: 4444444444444 Title: Test Book Four Genre: Education Author: Test Author
+
+ISBN: 5555555555555 Title: Test Book Five Genre: Fiction Author: Test Author
+
+ISBN: 9780061120084 Title: To Kill a Mockingbird Genre: Fiction Author: Harper Lee
+
+ISBN: 9780132350884 Title: Clean Code Genre: Programming Author: Robert C. Martin
+
+ISBN: 9780134494166 Title: Clean Architecture Genre: Programming Author: Robert C. Martin
+
+ISBN: 9780134685991 Title: Effective Java Genre: Programming Author: Joshua Bloch
+
+ISBN: 9780201633610 Title: Design Patterns Genre: Programming Author: Erich Gamma
+
+ISBN: 9780262033848 Title: Introduction to Algorithms Genre: Education Author: Thomas H. Cormen
+
+ISBN: 9780321356680 Title: Effective C++ Genre: Programming Author: Scott Meyers
+
+ISBN: 9780596009205 Title: Head First Java Genre: Programming Author: Kathy Sierra
+
+ISBN: 9780743273565 Title: The Great Gatsby Genre: Fiction Author: F. Scott Fitzgerald
+
+ISBN: 9781449355739 Title: Learning Python Genre: Programming Author: Mark Lutz
+
+ISBN: 9781491950357 Title: Designing Data-Intensive Applications Genre: Technology Author: Martin Kleppmann
+
+ISBN: 9781617294945 Title: Spring in Action Genre: Technology Author: Craig Walls
+
+Book Manager Menu:
+1) Add new book.
+2) Search for a book.
+3) Update existing book.
+4) Remove existing book.
+5) View all books.
+6) Exit book manager.
+6
+Returning to main menu.
+1) Manage Books.
+2) Manage Members.
+3) Manage Checkouts.
+4) Create Tables.
+5) Delete Tables.
+6) Exit program.
+5
+Are you sure you want to delete all the tables? This action cannot be undone. (Y/N)
+n
+Delete tables operation cancelled.
+1) Manage Books.
+2) Manage Members.
+3) Manage Checkouts.
+4) Create Tables.
+5) Delete Tables.
+6) Exit program.
+1
+Book Manager Menu:
+1) Add new book.
+2) Search for a book.
+3) Update existing book.
+4) Remove existing book.
+5) View all books.
+6) Exit book manager.
+5
+ISBN: 1111111111111 Title: Test Book One Genre: Fiction Author: Test Author
+
+ISBN: 2222222222222 Title: Test Book Two Genre: Programming Author: Test Author
+
+ISBN: 3333333333333 Title: Test Book Three Genre: Technology Author: Test Author
+
+ISBN: 4444444444444 Title: Test Book Four Genre: Education Author: Test Author
+
+ISBN: 5555555555555 Title: Test Book Five Genre: Fiction Author: Test Author
+
+ISBN: 9780061120084 Title: To Kill a Mockingbird Genre: Fiction Author: Harper Lee
+
+ISBN: 9780132350884 Title: Clean Code Genre: Programming Author: Robert C. Martin
+
+ISBN: 9780134494166 Title: Clean Architecture Genre: Programming Author: Robert C. Martin
+
+ISBN: 9780134685991 Title: Effective Java Genre: Programming Author: Joshua Bloch
+
+ISBN: 9780201633610 Title: Design Patterns Genre: Programming Author: Erich Gamma
+
+ISBN: 9780262033848 Title: Introduction to Algorithms Genre: Education Author: Thomas H. Cormen
+
+ISBN: 9780321356680 Title: Effective C++ Genre: Programming Author: Scott Meyers
+
+ISBN: 9780596009205 Title: Head First Java Genre: Programming Author: Kathy Sierra
+
+ISBN: 9780743273565 Title: The Great Gatsby Genre: Fiction Author: F. Scott Fitzgerald
+
+ISBN: 9781449355739 Title: Learning Python Genre: Programming Author: Mark Lutz
+
+ISBN: 9781491950357 Title: Designing Data-Intensive Applications Genre: Technology Author: Martin Kleppmann
+
+ISBN: 9781617294945 Title: Spring in Action Genre: Technology Author: Craig Walls
+
+Book Manager Menu:
+1) Add new book.
+2) Search for a book.
+3) Update existing book.
+4) Remove existing book.
+5) View all books.
+6) Exit book manager.
+6
+Returning to main menu.
+1) Manage Books.
+2) Manage Members.
+3) Manage Checkouts.
+4) Create Tables.
+5) Delete Tables.
+6) Exit program.
+5
+Are you sure you want to delete all the tables? This action cannot be undone. (Y/N)
+y
+Tables deleted successfully.
+1) Manage Books.
+2) Manage Members.
+3) Manage Checkouts.
+4) Create Tables.
+5) Delete Tables.
+6) Exit program.
+1
+Book Manager Menu:
+1) Add new book.
+2) Search for a book.
+3) Update existing book.
+4) Remove existing book.
+5) View all books.
+6) Exit book manager.
+5
+[ WARN] (main) Error: 1146-42S02: Table 'cprg211.book' doesn't exist
+(conn=57) Table 'cprg211.book' doesn't exist
+Book Manager Menu:
+1) Add new book.
+2) Search for a book.
+3) Update existing book.
+4) Remove existing book.
+5) View all books.
+6) Exit book manager.
+6
+Returning to main menu.
+1) Manage Books.
+2) Manage Members.
+3) Manage Checkouts.
+4) Create Tables.
+5) Delete Tables.
+6) Exit program.
+4
+Tables created successfully.
+1) Manage Books.
+2) Manage Members.
+3) Manage Checkouts.
+4) Create Tables.
+5) Delete Tables.
+6) Exit program.
+1
+Book Manager Menu:
+1) Add new book.
+2) Search for a book.
+3) Update existing book.
+4) Remove existing book.
+5) View all books.
+6) Exit book manager.
+5
+No books to display.
+Book Manager Menu:
+1) Add new book.
+2) Search for a book.
+3) Update existing book.
+4) Remove existing book.
+5) View all books.
+6) Exit book manager.
+6
+Returning to main menu.
+1) Manage Books.
+2) Manage Members.
+3) Manage Checkouts.
+4) Create Tables.
+5) Delete Tables.
+6) Exit program.
+6
+Exiting program

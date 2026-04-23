@@ -1,7 +1,8 @@
 package errors;
 
 public class InvalidDateException extends Throwable{
-    // error message variable
+	private static final long serialVersionUID = -8964630019480870654L;
+	// error message variable
     private String error;
 
     // constructor with no parameters that sets a default error message and a constructor with a string parameter to set a custom error message

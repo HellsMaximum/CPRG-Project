@@ -232,9 +232,17 @@ public class BookManager extends Manager {
 			stmt.setLong(1, isbnToUpdate);
 			ResultSet resultSet = stmt.executeQuery();
 			boolean found = false;
-			// check to see if book is found
+			long isbn = 0;
+			String title = "";
+			String genre = "";
+			String author = "";
+			// check to see if book is found and store the book data
 			while (resultSet.next()) {
 				found = true;
+				isbn = resultSet.getLong("ISBN");
+				title = resultSet.getString("Title");
+				genre = resultSet.getString("Genre");
+				author = resultSet.getString("Author");
 			}
 			// if the book is not found, break out of the sql search and return to the menu
 			if(!found) {
@@ -245,12 +253,12 @@ public class BookManager extends Manager {
 				sqlStmt = "SELECT * FROM CHECKOUT WHERE BookISBN = ?";
 				stmt = conn.prepareStatement(sqlStmt);
 				stmt.setLong(1, isbnToUpdate);
-				resultSet = stmt.executeQuery();
-				if (resultSet.next()) {
+				ResultSet resultSet2 = stmt.executeQuery();
+				if (resultSet2.next()) {
 					throw new ISBNException("Book with ISBN: " + isbnToUpdate + " cannot be updated because it is currently checked out.");
 				} else {
 					// print out elements of the book that was found
-					System.out.println(String.format("ISBN: %d Title: %s Genre: %s Author: %s\n", resultSet.getLong("ISBN"), resultSet.getString("Title"), resultSet.getString("Genre"), resultSet.getString("Author")));
+					System.out.println(String.format("ISBN: %d Title: %s Genre: %s Author: %s\n", isbn, title, genre, author));
 					// Select the element of the book to edit
 					System.out.println("Select element to update: \n1) Title \n2) Genre \n3) Author");
 					int elementToUpdate = 0;

@@ -7,7 +7,6 @@ import java.time.temporal.ChronoUnit;
 
 import errors.NotFoundException;
 import errors.InvalidDateException;
-import errors.CharacterLimitException;
 import errors.ISBNException;
 
 public class CheckoutManager extends Manager {
@@ -142,13 +141,19 @@ public class CheckoutManager extends Manager {
 	@Override
 	public void remove() {
 		System.out.println("Enter the Checkout ID of the book being returned:");
-		int checkoutID = Integer.parseInt(keyboard.nextLine());
+		String checkoutIDStr = keyboard.nextLine();
+		// validate that the checkout ID is a number
+		while (!checkoutIDStr.matches("\\d+")) {
+			System.out.println("Invalid input. Please enter a valid Checkout ID.");
+			checkoutIDStr = keyboard.nextLine();
+		}
+		int checkoutIDInt = Integer.parseInt(checkoutIDStr);
 
 		String sqlStmt = "SELECT * FROM CHECKOUT WHERE CHECKOUTID = ?";
 		// Verify that the book exists before attempting to delete it
 		try {
 			PreparedStatement stmt = conn.prepareStatement(sqlStmt);
-			stmt.setInt(1, checkoutID);
+			stmt.setInt(1, checkoutIDInt);
 			ResultSet resultSet = stmt.executeQuery();
 			if (!resultSet.next()) {
 				throw new NotFoundException("Checkout not found. Please enter a valid Checkout ID.");
@@ -165,7 +170,7 @@ public class CheckoutManager extends Manager {
 					// Delete the checkout from the database
 					sqlStmt = "DELETE FROM CHECKOUT WHERE CHECKOUTID = ?";
 					stmt = conn.prepareStatement(sqlStmt);
-					stmt.setInt(1, checkoutID);
+					stmt.setInt(1, checkoutIDInt);
 					stmt.executeUpdate();
 				} else {
 					System.out.println("Book returned on time. No late fee.\n");
@@ -173,7 +178,7 @@ public class CheckoutManager extends Manager {
 					// Delete the checkout from the database
 					sqlStmt = "DELETE FROM CHECKOUT WHERE CHECKOUTID = ?";
 					stmt = conn.prepareStatement(sqlStmt);
-					stmt.setInt(1, checkoutID);
+					stmt.setInt(1, checkoutIDInt);
 					stmt.executeUpdate();
 				}
 			}

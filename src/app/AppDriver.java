@@ -28,7 +28,7 @@ public class AppDriver {
 			System.out.println("2) Manage Members.");
 			System.out.println("3) Manage Checkouts.");
 			System.out.println("4) Create Tables.");
-			System.out.println("5) Drop Tables.");
+			System.out.println("5) Delete Tables.");
 			System.out.println("6) Exit program.");
 			String choiceM = keyboardM.nextLine();
 			if (!choiceM.matches("\\d+")) {
@@ -38,45 +38,56 @@ public class AppDriver {
 				choiceMInt = Integer.parseInt(choiceM);
 				switch(choiceMInt) {
 					case 1: 
-					try { 
-						new BookManager(dbc.getConn(), dbc.getStmt());
-						//use initialized books class
-					} catch (Throwable e) {
-						System.out.println(e.getMessage());
-					}
+						try { 
+							new BookManager(dbc.getConn(), dbc.getStmt());
+							//use initialized books class
+						} catch (Throwable e) {
+							System.out.println(e.getMessage());
+						}
 						break;
 					case 2:
-					try {
-						System.out.println("Initializing Member Manager...");
-						new MemberManager(dbc.getConn(), dbc.getStmt());
-						//use initialized members class
-					} catch (Throwable e) {
-						System.out.println(e.getMessage());
-					}
+						try {
+							System.out.println("Initializing Member Manager...");
+							new MemberManager(dbc.getConn(), dbc.getStmt());
+							//use initialized members class
+						} catch (Throwable e) {
+							System.out.println(e.getMessage());
+						}
 						break;
 					case 3:
-					try {
-						new CheckoutManager(dbc.getConn(), dbc.getStmt());
-						//use the initialized checkouts class
-					} catch (Throwable e) {
-						System.out.println(e.getMessage());
-					}
+						try {
+							new CheckoutManager(dbc.getConn(), dbc.getStmt());
+							//use the initialized checkouts class
+						} catch (Throwable e) {
+							System.out.println(e.getMessage());
+						}
 						break;
 					case 4:
-					try {
-						dbc.createTables();
-						System.out.println("Tables created successfully.");
-					} catch (SQLException e) {
-						System.out.println(e.getMessage());
-					}
+						try {
+							dbc.createTables();
+							System.out.println("Tables created successfully.");
+						} catch (SQLException e) {
+							System.out.println(e.getMessage());
+						}
 						break;
 					case 5:
-					try {
-						dbc.dropTables();
-						System.out.println("Tables dropped successfully.");
-					} catch (SQLException e) {
-						System.out.println(e.getMessage());
-					}
+						// Ask for confirmation from the user before deleting the tables
+						System.out.println("Are you sure you want to delete all the tables? This action cannot be undone. (Y/N)");
+						String confirmation = keyboardM.nextLine();
+						while (!confirmation.equalsIgnoreCase("Y") && !confirmation.equalsIgnoreCase("N")) {
+							System.out.println("Invalid input. Please enter Y or N.");
+							confirmation = keyboardM.nextLine();
+						}
+						if (confirmation.equalsIgnoreCase("Y")) {
+							try {
+								dbc.dropTables();
+								System.out.println("Tables deleted successfully.");
+							} catch (SQLException e) {
+								System.out.println(e.getMessage());
+							}
+						} else {
+							System.out.println("Delete tables operation cancelled.");
+						}
 						break;
 					case 6:
 						keyboardM.close();

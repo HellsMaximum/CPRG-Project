@@ -1,0 +1,28 @@
+CPRG-211-B Final Project - Database Connected Application
+
+All code written by Douglas Dickens, Liam Weeks, and Beatrice Genilo
+
+TestTablePopulation.SQL is written with the help of AI to help populate the tables for testing the code
+
+=====================================================================================================================
+
+This project was made to have a simple interface that is quick and intuitive to use for anyone.
+Its main goal is to make it so that database information is easier to read and add to without needing sql knowledge
+
+This project is made with a librarian user in mind. It is made to be a way for a librarian to manage:
+-> What books are in the library
+-> Who the library members are
+-> who is currently borrowing a book and making new checkouts whenever someone borrows a new book
+
+It also allows the librarian to quickly search through and update the database very quickly and intuitivly
+
+=====================================================================================================================
+
+This is acomplished by using a abstract manager class to set some default variables for database connection
+and making sure that every other manager class has the same methods with just some slight variation in how they each work
+
+Almost all errors are handled through throwing and then catching unique errors to help keep track of what each error is suppost to be
+
+Lastly Database connection, disconnection, table creation, and table deletion are all handled through a database controller
+
+(sorry if this is a little incoherent, I tried my best for writing this at 2am..... I forgot to create it earlier)

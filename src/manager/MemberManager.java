@@ -36,13 +36,21 @@ public class MemberManager extends Manager {
 			System.out.println("4) Remove existing member.");
 			System.out.println("5) View all members.");
 			System.out.println("6) Exit member manager.");
-			choice = Integer.parseInt(keyboard.nextLine());
+
+			// menu choice validation
+			String choiceStr = keyboard.nextLine();
+			while (!choiceStr.matches("[1-6]")) {
+				System.out.println("Invalid input. Please enter a number between 1 and 6.");
+				choiceStr = keyboard.nextLine();
+			}
+
+			choice = Integer.parseInt(choiceStr);
 			switch(choice) {
 				case 1: 
 				try {
 					add();
 				} catch (Throwable e) {
-					e.getMessage();
+					System.out.println(e.getMessage());
 				}
 					break;
 				case 2:
@@ -52,7 +60,7 @@ public class MemberManager extends Manager {
 				try {
 					update();
 				} catch (Throwable e) {
-					e.getMessage();
+					System.out.println(e.getMessage());
 				}
 					break;
 				case 4:
@@ -178,8 +186,8 @@ public class MemberManager extends Manager {
 				sqlStmt = "SELECT * FROM CHECKOUT WHERE MEMBERID = ?";
 				stmt = conn.prepareStatement(sqlStmt);
 				stmt.setString(1, memberID);
-				resultSet = stmt.executeQuery();
-				if (resultSet.next()) {
+				ResultSet resultSet2 = stmt.executeQuery();
+				if (resultSet2.next()) {
 					throw new NotFoundException("Member with ID: " + memberID + " cannot be updated because they have outstanding checkouts.");
 				} else {
 					// print out the current information of the member to the user
@@ -256,12 +264,13 @@ public class MemberManager extends Manager {
 		System.out.println("Search menu: \n1) Search by Member ID \n2) Search by First Name \n3) Search by Last Name");
 		
 		// get a valid menu choice from the user
-		while (menuChoice < 1 || menuChoice > 3) {
-			menuChoice = Integer.parseInt(keyboard.nextLine());
-			if (menuChoice < 1 || menuChoice > 3) {
-				System.out.println("Invalid menu choice. Please enter a number between 1 and 3.");
-			}
+		String menuChoiceStr = keyboard.nextLine();
+		while (!menuChoiceStr.matches("[1-3]")) {
+			System.out.println("Invalid menu choice. Please enter 1, 2, or 3.");
+			menuChoiceStr = keyboard.nextLine();
 		}
+		menuChoice = Integer.parseInt(menuChoiceStr);
+
 
 		switch (menuChoice) {
 			// Selecting the serch criteria by member id

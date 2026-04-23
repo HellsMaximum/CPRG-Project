@@ -30,7 +30,7 @@ public class DatabaseController {
 		// stores the SQL statements to create the tables in an array
 		String[] createTableStatements = {
 				"CREATE TABLE IF NOT EXISTS BOOK ("
-						+ "ISBN BIGINT PRIMARY KEY, "
+						+ "ISBN BIGINT(13) PRIMARY KEY, "
 						+ "TITLE VARCHAR(75) NOT NULL, "
 						+ "GENRE VARCHAR(75) NOT NULL, "
 						+ "AUTHOR VARCHAR(75) NOT NULL"
@@ -45,7 +45,7 @@ public class DatabaseController {
 						+ "CHECKOUTDATE DATE NOT NULL, "
 						+ "RETURNDATE DATE NOT NULL, "
 						+ "MEMBERID BIGINT NOT NULL, "
-						+ "BOOKISBN BIGINT NOT NULL, "
+						+ "BOOKISBN BIGINT(13) NOT NULL, "
 						+ "CONSTRAINT fk_checkout_member FOREIGN KEY (MEMBERID) REFERENCES MEMBER(MEMBERID), "
 						+ "CONSTRAINT fk_checkout_book FOREIGN KEY (BOOKISBN) REFERENCES BOOK(ISBN)"
 						+ ")"
