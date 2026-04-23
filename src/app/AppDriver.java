@@ -17,14 +17,12 @@ public class AppDriver {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		
 		new BookManager(dbc.getConn(), dbc.getStmt());
 		// new MemberManager(DatabaseConnection.getConn(), DatabaseConnection.getStmt());
 		// new CheckoutManager(DatabaseConnection.getConn(), DatabaseConnection.getStmt());
 		
 		
-		//Main Menu Method
+		//Main Menu
 		int choiceM = 0;
 		//loop for entering sub-menus/methods
 		while(choiceM != 4) {
