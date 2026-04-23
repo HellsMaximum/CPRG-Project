@@ -64,6 +64,16 @@ public class DatabaseController {
 				+ ");";
 		stmt.execute(SQLStatement);
 	}
+	public void dropTables() throws SQLException
+	{
+		String dropTablesStmt = "DROP TABLE member_checkout;"
+				+ "DROP TABLE book_checkout;"
+				+ "DROP TABLE checkout;"
+				+ "DROP TABLE member;"
+				+ "DROP TABLE book;";
+		stmt.execute(dropTablesStmt);
+		
+	}
 	// Method to disconnect from the database and close the keyboard scanner
 	public void disconnect() {
 		try {
