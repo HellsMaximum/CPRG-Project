@@ -22,13 +22,7 @@ public class DatabaseController {
 		stmt= conn.createStatement();	
 	}
 	public void createTables() throws SQLException{
-		String SQLStatement = "DROP TABLE book_checkout;\r\n"
-				+ "DROP TABLE member_checkout;\r\n"
-				+ "DROP TABLE checkout;\r\n"
-				+ "DROP TABLE member;\r\n"
-				+ "DROP TABLE book;\r\n"
-				+ "\r\n"
-				+ "CREATE TABLE book (\r\n"
+		String SQLStatement = "CREATE TABLE book (\r\n"
 				+ "    isbn VARCHAR(13) PRIMARY KEY,\r\n"
 				+ "    name VARCHAR(30),\r\n"
 				+ "    author VARCHAR(30),\r\n"
