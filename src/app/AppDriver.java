@@ -20,46 +20,71 @@ public class AppDriver {
 		}
 		
 		//Main Menu
-		int choiceM = 0;
+		int choiceMInt = 0;
 		Scanner keyboardM = new Scanner(System.in);
 		//loop for entering sub-menus/methods
-		while(choiceM != 4) {
+		while(choiceMInt != 6) {
 			System.out.println("1) Manage Books.");
 			System.out.println("2) Manage Members.");
 			System.out.println("3) Manage Checkouts.");
-			System.out.println("4) Exit program.");
-			choiceM = Integer.parseInt(keyboardM.nextLine());
-			switch(choiceM) {
-				case 1: 
-				try { 
-					new BookManager(dbc.getConn(), dbc.getStmt());
-					//use initialized books class
-				} catch (Throwable e) {
-					System.out.println(e.getMessage());
+			System.out.println("4) Create Tables.");
+			System.out.println("5) Drop Tables.");
+			System.out.println("6) Exit program.");
+			String choiceM = keyboardM.nextLine();
+			if (!choiceM.matches("\\d+")) {
+				System.out.println("Invalid input. Please enter 1 to 6.");
+				continue;
+			} else{
+				choiceMInt = Integer.parseInt(choiceM);
+				switch(choiceMInt) {
+					case 1: 
+					try { 
+						new BookManager(dbc.getConn(), dbc.getStmt());
+						//use initialized books class
+					} catch (Throwable e) {
+						System.out.println(e.getMessage());
+					}
+						break;
+					case 2:
+					try {
+						System.out.println("Initializing Member Manager...");
+						new MemberManager(dbc.getConn(), dbc.getStmt());
+						//use initialized members class
+					} catch (Throwable e) {
+						System.out.println(e.getMessage());
+					}
+						break;
+					case 3:
+					try {
+						new CheckoutManager(dbc.getConn(), dbc.getStmt());
+						//use the initialized checkouts class
+					} catch (Throwable e) {
+						System.out.println(e.getMessage());
+					}
+						break;
+					case 4:
+					try {
+						dbc.createTables();
+						System.out.println("Tables created successfully.");
+					} catch (SQLException e) {
+						System.out.println(e.getMessage());
+					}
+						break;
+					case 5:
+					try {
+						dbc.dropTables();
+						System.out.println("Tables dropped successfully.");
+					} catch (SQLException e) {
+						System.out.println(e.getMessage());
+					}
+						break;
+					case 6:
+						keyboardM.close();
+						System.out.println("Exiting program");
+						break;
+					default:
+						System.out.println("Invalid input. Please enter 1 to 6.");	
 				}
-					break;
-				case 2:
-				try {
-					new MemberManager(dbc.getConn(), dbc.getStmt());
-					//use initialized members class
-				} catch (Throwable e) {
-					System.out.println(e.getMessage());
-				}
-					break;
-				case 3:
-				try {
-					new CheckoutManager(dbc.getConn(), dbc.getStmt());
-					//use the initialized checkouts class
-				} catch (Throwable e) {
-					System.out.println(e.getMessage());
-				}
-					break;
-				case 4:
-					keyboardM.close();
-					System.out.println("Exiting program");
-					break;
-				default:
-					System.out.println("Invalid input. Please enter 1 to 4.");	
 			}
 		}
 	}

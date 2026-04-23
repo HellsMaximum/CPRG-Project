@@ -145,11 +145,18 @@ public class BookManager extends Manager {
 	 * if the book is not found, error out and return to the menu
 	 * if the book is found, delete it from the database and return to the menu
 	 * Includes error handling for the ISBN input using the custom exceptions created in the errors package 
+	 * if the book is being borrowed by a member and has not been returned, error out and return to the menu
 	 */ 
 	@Override
 	public void remove() {
 		System.out.println("Enter ISBN of book to remove: ");
 		long isbn = Long.parseLong(keyboard.nextLine());
+		
+		// validate the ISBN input
+		while (String.valueOf(isbn).length() != 13 || !String.valueOf(isbn).matches("\\d+")) {
+			System.out.println("Invalid input. ISBN must be 13 characters long and only contain numeric characters. \nPlease enter a valid ISBN: ");
+			isbn = Long.parseLong(keyboard.nextLine());
+		}
 
 		String sqlStmt = "SELECT * FROM BOOK WHERE ISBN = ?";
 		// Verify that the book exists before attempting to delete it
@@ -166,17 +173,28 @@ public class BookManager extends Manager {
 			if (!found){
 				throw new NotFoundException("Book with ISBN: " + isbn + " was not found.");
 			}
-			// if the book is found, delete it from the database and return to the menu
+			// if the book is found, check to see if it is currently checked out
 			else {
-				sqlStmt = "DELETE FROM BOOK WHERE ISBN = ?";
-				PreparedStatement deleteStmt = conn.prepareStatement(sqlStmt);
-				deleteStmt.setLong(1, isbn);
-				int rowsDeleted = deleteStmt.executeUpdate();
-				System.out.println(rowsDeleted + " record(s) deleted.");
+				sqlStmt = "SELECT * FROM CHECKOUT WHERE BookISBN = ?";
+				stmt = conn.prepareStatement(sqlStmt);
+				stmt.setLong(1, isbn);
+				resultSet = stmt.executeQuery();
+				if (resultSet.next()) {
+					throw new ISBNException("Book with ISBN: " + isbn + " cannot be deleted because it is currently checked out.");
+				} 
+				else {
+					sqlStmt = "DELETE FROM BOOK WHERE ISBN = ?";
+					stmt = conn.prepareStatement(sqlStmt);
+					stmt.setLong(1, isbn);
+					int row = stmt.executeUpdate();
+					System.out.println(row + " record(s) deleted.");
+				}
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		} catch (NotFoundException e) {
+			System.out.println(e.getMessage());
+		} catch (ISBNException e) {
 			System.out.println(e.getMessage());
 		}
 		
@@ -191,12 +209,20 @@ public class BookManager extends Manager {
 	 * user inputs the new data for the selected element
 	 * if the new data is in an invalid format, error out and return to the menu
 	 * if the new data is valid, update the book in the database with the new data and return to the menu
+	 * Checks to see if the data being updated is currently checked out by a member
+	 * if the book is currently checked out, error out and return to the menu without updating the book
 	 */
 	@Override
 	public void update(){
 		// get the user to input the ISBN of the book they want to update
 		System.out.println("Enter ISBN of the book to update: ");
 		long isbnToUpdate = Long.parseLong(keyboard.nextLine());
+		
+		// validate the ISBN input
+		while (String.valueOf(isbnToUpdate).length() != 13 || !String.valueOf(isbnToUpdate).matches("\\d+")) {
+			System.out.println("Invalid input. ISBN must be 13 characters long and only contain numeric characters. \nPlease enter a valid ISBN: ");
+			isbnToUpdate = Long.parseLong(keyboard.nextLine());
+		}
 
 		// Select the book with the matching ISBN
 		String sqlStmt = "SELECT * FROM BOOK WHERE ISBN = ?";
@@ -206,80 +232,90 @@ public class BookManager extends Manager {
 			stmt.setLong(1, isbnToUpdate);
 			ResultSet resultSet = stmt.executeQuery();
 			boolean found = false;
-			// display the books current information if it is found
+			// check to see if book is found
 			while (resultSet.next()) {
 				found = true;
-				System.out.println(String.format("ISBN: %d Title: %s Genre: %s Author: %s", resultSet.getLong("ISBN"), resultSet.getString("Title"), resultSet.getString("Genre"), resultSet.getString("Author")));
 			}
 			// if the book is not found, break out of the sql search and return to the menu
 			if(!found) {
 				throw new NotFoundException("Book with ISBN: " + isbnToUpdate + " was not found.");
 			} 
 			else {
-				// Select the element of the book to edit
-				System.out.println("Select element to update: \n1) Title \n2) Genre \n3) Author");
-				int elementToUpdate = 0;
-				while (elementToUpdate < 1 || elementToUpdate > 3) {
-					elementToUpdate = Integer.parseInt(keyboard.nextLine());
-					if (elementToUpdate < 1 || elementToUpdate > 3) {
-						System.out.println("Invalid input. Please enter a number between 1 and 3.");
+				// check to see if the book is currently checked out by a member
+				sqlStmt = "SELECT * FROM CHECKOUT WHERE BookISBN = ?";
+				stmt = conn.prepareStatement(sqlStmt);
+				stmt.setLong(1, isbnToUpdate);
+				resultSet = stmt.executeQuery();
+				if (resultSet.next()) {
+					throw new ISBNException("Book with ISBN: " + isbnToUpdate + " cannot be updated because it is currently checked out.");
+				} else {
+					// print out elements of the book that was found
+					System.out.println(String.format("ISBN: %d Title: %s Genre: %s Author: %s\n", resultSet.getLong("ISBN"), resultSet.getString("Title"), resultSet.getString("Genre"), resultSet.getString("Author")));
+					// Select the element of the book to edit
+					System.out.println("Select element to update: \n1) Title \n2) Genre \n3) Author");
+					int elementToUpdate = 0;
+					while (elementToUpdate < 1 || elementToUpdate > 3) {
+						elementToUpdate = Integer.parseInt(keyboard.nextLine());
+						if (elementToUpdate < 1 || elementToUpdate > 3) {
+							System.out.println("Invalid input. Please enter a number between 1 and 3.");
+						}
 					}
-				}
-				// Switch statement to update selected element
-				// Throws custom error if the new input is invalid
-				switch(elementToUpdate){
-					case 1:
-						System.out.println("Enter new title: ");
-						String newTitle = keyboard.nextLine();
-						if (newTitle.length() > 75) {
-							throw new CharacterLimitException("Book title cannot exceed 75 characters.");
-						}
-						else {
-							sqlStmt = "UPDATE BOOK SET TITLE = ? WHERE ISBN = ?";
-							stmt = conn.prepareStatement(sqlStmt);
-							stmt.setString(1, newTitle);
-							stmt.setLong(2, isbnToUpdate);
-							int row = stmt.executeUpdate();
-							System.out.println(row + " record(s) updated.");
-						}
-						break;
-					case 2:
-						System.out.println("Enter new genre: ");
-						String newGenre = keyboard.nextLine();
-						if (newGenre.length() > 75) {
-							throw new CharacterLimitException("Genre cannot exceed 75 characters.");
-						}
-						else {
-							sqlStmt = "UPDATE BOOK SET GENRE = ? WHERE ISBN = ?";
-							stmt = conn.prepareStatement(sqlStmt);
-							stmt.setString(1, newGenre);
-							stmt.setLong(2, isbnToUpdate);
-							int row = stmt.executeUpdate();
-							System.out.println(row + " record(s) updated.");
-						}
-						break;
-					case 3:
-						System.out.println("Enter new author: ");
-						String newAuthor = keyboard.nextLine();
-						if (newAuthor.length() > 75) {
+					// Switch statement to update selected element
+					// Throws custom error if the new input is invalid
+					switch(elementToUpdate){
+						case 1:
+							System.out.println("Enter new title: ");
+							String newTitle = keyboard.nextLine();
+							if (newTitle.length() > 75) {
+								throw new CharacterLimitException("Book title cannot exceed 75 characters.");
+							}
+								else {
+									sqlStmt = "UPDATE BOOK SET TITLE = ? WHERE ISBN = ?";
+									stmt = conn.prepareStatement(sqlStmt);
+									stmt.setString(1, newTitle);
+									stmt.setLong(2, isbnToUpdate);
+									int row = stmt.executeUpdate();
+									System.out.println(row + " record(s) updated.");
+								}
+								break;
+						case 2:
+							System.out.println("Enter new genre: ");
+							String newGenre = keyboard.nextLine();
+							if (newGenre.length() > 75) {
+								throw new CharacterLimitException("Genre cannot exceed 75 characters.");
+							} else {
+								sqlStmt = "UPDATE BOOK SET GENRE = ? WHERE ISBN = ?";
+								stmt = conn.prepareStatement(sqlStmt);
+								stmt.setString(1, newGenre);
+								stmt.setLong(2, isbnToUpdate);
+								int row = stmt.executeUpdate();
+								System.out.println(row + " record(s) updated.");
+							}
+							break;
+						case 3:
+							System.out.println("Enter new author: ");
+							String newAuthor = keyboard.nextLine();
+							if (newAuthor.length() > 75) {
 							throw new CharacterLimitException("Author name cannot exceed 75 characters.");
-						}
-						else {
-							sqlStmt = "UPDATE BOOK SET AUTHOR = ? WHERE ISBN = ?";
-							stmt = conn.prepareStatement(sqlStmt);
-							stmt.setString(1, newAuthor);
-							stmt.setLong(2, isbnToUpdate);
-							int row = stmt.executeUpdate();
-							System.out.println(row + " record(s) updated.");
-						}
-						break;
-					default:
-						throw new IllegalArgumentException("Invalid input.");
+							} else {
+								sqlStmt = "UPDATE BOOK SET AUTHOR = ? WHERE ISBN = ?";
+								stmt = conn.prepareStatement(sqlStmt);
+								stmt.setString(1, newAuthor);
+								stmt.setLong(2, isbnToUpdate);
+								int row = stmt.executeUpdate();
+								System.out.println(row + " record(s) updated.");
+							}
+							break;
+						default:
+							throw new IllegalArgumentException("Invalid input.");
+					}
 				}
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		} catch (NotFoundException | CharacterLimitException | IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		} catch (ISBNException e) {
 			System.out.println(e.getMessage());
 		}
 	}
@@ -323,7 +359,7 @@ public class BookManager extends Manager {
 					// Check if the ISBN is valid
 					while (resultSet.next()) {
 						found = true;
-						System.out.println(String.format("ISBN: %d Title: %s Genre: %s Author: %s", resultSet.getLong("ISBN"), resultSet.getString("Title"), resultSet.getString("Genre"), resultSet.getString("Author")));
+						System.out.println(String.format("ISBN: %d Title: %s Genre: %s Author: %s\n", resultSet.getLong("ISBN"), resultSet.getString("Title"), resultSet.getString("Genre"), resultSet.getString("Author")));
 					}
 					// if the book is not found, break out of the sql search and return to the menu
 					if (!found){
@@ -352,7 +388,7 @@ public class BookManager extends Manager {
 					boolean found = false;
 					while (resultSet.next()) {
 						found = true;
-						System.out.println(String.format("ISBN: %d Title: %s Genre: %s Author: %s", resultSet.getLong("ISBN"), resultSet.getString("Title"), resultSet.getString("Genre"), resultSet.getString("Author")));
+						System.out.println(String.format("ISBN: %d Title: %s Genre: %s Author: %s\n", resultSet.getLong("ISBN"), resultSet.getString("Title"), resultSet.getString("Genre"), resultSet.getString("Author")));
 					}
 					if (!found){
 						throw new NotFoundException("Book with Title: " + title + " was not found.");
@@ -381,7 +417,7 @@ public class BookManager extends Manager {
 					boolean found = false;
 					while (resultSet.next()) {
 						found = true;
-						System.out.println(String.format("ISBN: %d Title: %s Genre: %s Author: %s", resultSet.getLong("ISBN"), resultSet.getString("Title"), resultSet.getString("Genre"), resultSet.getString("Author")));
+						System.out.println(String.format("ISBN: %d Title: %s Genre: %s Author: %s\n", resultSet.getLong("ISBN"), resultSet.getString("Title"), resultSet.getString("Genre"), resultSet.getString("Author")));
 					}
 					if (!found){
 						throw new NotFoundException("Book with Genre: " + genre + " was not found.");
@@ -409,7 +445,7 @@ public class BookManager extends Manager {
 					boolean found = false;
 					while (resultSet.next()) {
 						found = true;
-						System.out.println(String.format("ISBN: %d Title: %s Genre: %s Author: %s", resultSet.getLong("ISBN"), resultSet.getString("Title"), resultSet.getString("Genre"), resultSet.getString("Author")));
+						System.out.println(String.format("ISBN: %d Title: %s Genre: %s Author: %s\n", resultSet.getLong("ISBN"), resultSet.getString("Title"), resultSet.getString("Genre"), resultSet.getString("Author")));
 					}
 					if (!found){
 						throw new NotFoundException("Book with Author: " + author + " was not found.");
@@ -440,7 +476,7 @@ public class BookManager extends Manager {
 			boolean found = false;
 			while (resultSet.next()) {
 				found = true;
-				System.out.println(String.format("ISBN: %d Title: %s Genre: %s Author: %s", resultSet.getLong("ISBN"), resultSet.getString("Title"), resultSet.getString("Genre"), resultSet.getString("Author")));
+				System.out.println(String.format("ISBN: %d Title: %s Genre: %s Author: %s\n", resultSet.getLong("ISBN"), resultSet.getString("Title"), resultSet.getString("Genre"), resultSet.getString("Author")));
 			}
 			if (!found) {
 				System.out.println("No books to display.");

@@ -5,9 +5,10 @@ import java.util.Scanner;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 
-import errors.CharacterLimitException;
 import errors.NotFoundException;
 import errors.InvalidDateException;
+import errors.CharacterLimitException;
+import errors.ISBNException;
 
 public class CheckoutManager extends Manager {
 
@@ -56,7 +57,6 @@ public class CheckoutManager extends Manager {
 					viewAll();
 					break;
 				case 6:
-					keyboard.close();
 					System.out.println("Returning to Main Menu...");
 					break;
 				default:
@@ -92,6 +92,10 @@ public class CheckoutManager extends Manager {
 	
 				System.out.println("Enter the ISBN of the book being checked out:");
 				String bookISBN = keyboard.nextLine();
+				// book ISBN validation, ISBN must be 13 characters long and can only contain numbers
+				if (!bookISBN.matches("\\d{13}")) {
+					throw new ISBNException("Invalid ISBN. ISBN must be 13 characters long and only contain numeric characters.");
+				}
 	
 				/**
 				 * There might be a bug here with isbn not being a long.
@@ -120,6 +124,8 @@ public class CheckoutManager extends Manager {
 		} catch (NotFoundException e) {
 			System.out.println(e.getMessage());
 			return;
+		} catch (ISBNException e) {
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -446,7 +452,7 @@ public class CheckoutManager extends Manager {
 			boolean found = false;
 			while (resultSet.next()) {
 				found = true;
-				System.out.println(String.format("Checkout ID: %s Checkout Date: %s Return Date: %s Member ID: %s Book ISBN: %s Book Returned: %s\n", resultSet.getInt("CheckoutID"), resultSet.getString("CheckoutDate"), resultSet.getString("ReturnDate"), resultSet.getString("MemberID"), resultSet.getString("BookISBN"), resultSet.getString("BookReturned")));
+				System.out.println(String.format("Checkout ID: %s Checkout Date: %s Return Date: %s Member ID: %s Book ISBN: %s\n", resultSet.getInt("CheckoutID"), resultSet.getString("CheckoutDate"), resultSet.getString("ReturnDate"), resultSet.getString("MemberID"), resultSet.getString("BookISBN")));
 			}
 			if (!found) {
 				System.out.println("No checkouts to display.");

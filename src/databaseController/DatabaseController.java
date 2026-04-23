@@ -21,57 +21,59 @@ public class DatabaseController {
 		System.out.println("Connection to DB established.");
 		stmt= conn.createStatement();	
 	}
+
+	/**
+	 * Method to create the tables in the database if they don't already exist
+	 * the tables are as follows: BOOK, MEMBER, CHECKOUT
+	 */
 	public void createTables() throws SQLException{
-		String SQLStatement = "CREATE TABLE book (\r\n"
-				+ "    isbn VARCHAR(13) PRIMARY KEY,\r\n"
-				+ "    name VARCHAR(30),\r\n"
-				+ "    author VARCHAR(30),\r\n"
-				+ "    genre VARCHAR(30),\r\n"
-				+ "    checked_out CHAR(1)\r\n"
-				+ ");\r\n"
-				+ "\r\n"
-				+ "CREATE TABLE member (\r\n"
-				+ "    id NUMBER(30) PRIMARY KEY,\r\n"
-				+ "    name VARCHAR(30),\r\n"
-				+ "    total_overdue_fees VARCHAR(30),\r\n"
-				+ "    can_checkout CHAR(1)\r\n"
-				+ ");\r\n"
-				+ "CREATE TABLE checkout (\r\n"
-				+ "    id VARCHAR2(30) PRIMARY KEY,\r\n"
-				+ "    date_of_checkout DATE,\r\n"
-				+ "    date_to_return DATE,\r\n"
-				+ "    overdue_fees VARCHAR(30),\r\n"
-				+ "    returned_status CHAR(1),\r\n"
-				+ "    checked_out_isbn VARCHAR(13),\r\n"
-				+ "    checked_out_id NUMBER(30),\r\n"
-				+ "    CONSTRAINT fk_checkout_book FOREIGN KEY (checked_out_isbn) REFERENCES book(isbn),\r\n"
-				+ "    CONSTRAINT fk_checkout_member FOREIGN KEY (checked_out_id) REFERENCES member(id)\r\n"
-				+ ");\r\n"
-				+ "CREATE TABLE book_checkout (\r\n"
-				+ "    isbn VARCHAR(13),\r\n"
-				+ "    checkout_id VARCHAR(30),\r\n"
-				+ "    CONSTRAINT pk_book_checkout PRIMARY KEY (isbn, checkout_id),\r\n"
-				+ "    CONSTRAINT fk_bc_book FOREIGN KEY (isbn) REFERENCES book(isbn),\r\n"
-				+ "    CONSTRAINT fk_bc_checkout FOREIGN KEY (checkout_id) REFERENCES checkout(id)\r\n"
-				+ ");\r\n"
-				+ "\r\n"
-				+ "CREATE TABLE member_checkout (\r\n"
-				+ "    member_id NUMBER(30),\r\n"
-				+ "    checkout_id VARCHAR(30),\r\n"
-				+ "    CONSTRAINT pk_member_checkout PRIMARY KEY (member_id, checkout_id),\r\n"
-				+ "    CONSTRAINT fk_mc_member FOREIGN KEY (member_id) REFERENCES member(id),\r\n"
-				+ "    CONSTRAINT fk_mc_checkout FOREIGN KEY (checkout_id) REFERENCES checkout(id)\r\n"
-				+ ");";
-		stmt.execute(SQLStatement);
+		// stores the SQL statements to create the tables in an array
+		String[] createTableStatements = {
+				"CREATE TABLE IF NOT EXISTS BOOK ("
+						+ "ISBN BIGINT PRIMARY KEY, "
+						+ "TITLE VARCHAR(75) NOT NULL, "
+						+ "GENRE VARCHAR(75) NOT NULL, "
+						+ "AUTHOR VARCHAR(75) NOT NULL"
+						+ ")",
+				"CREATE TABLE IF NOT EXISTS MEMBER ("
+						+ "MEMBERID BIGINT PRIMARY KEY AUTO_INCREMENT, "
+						+ "FIRSTNAME VARCHAR(50) NOT NULL, "
+						+ "LASTNAME VARCHAR(50) NOT NULL"
+						+ ")",
+				"CREATE TABLE IF NOT EXISTS CHECKOUT ("
+						+ "CHECKOUTID INT PRIMARY KEY AUTO_INCREMENT, "
+						+ "CHECKOUTDATE DATE NOT NULL, "
+						+ "RETURNDATE DATE NOT NULL, "
+						+ "MEMBERID BIGINT NOT NULL, "
+						+ "BOOKISBN BIGINT NOT NULL, "
+						+ "CONSTRAINT fk_checkout_member FOREIGN KEY (MEMBERID) REFERENCES MEMBER(MEMBERID), "
+						+ "CONSTRAINT fk_checkout_book FOREIGN KEY (BOOKISBN) REFERENCES BOOK(ISBN)"
+						+ ")"
+		};
+
+		// loops through the array and tries to create a new table for each SQL statement
+		for (String createTableStatement : createTableStatements) {
+			stmt.execute(createTableStatement);
+		}
 	}
+
+	/**
+	 * Method to drop the tables in the database if they exist
+	 * the tables are as follows: CHECKOUT, MEMBER, BOOK
+	 */
 	public void dropTables() throws SQLException
 	{
-		String dropTablesStmt = "DROP TABLE member_checkout;"
-				+ "DROP TABLE book_checkout;"
-				+ "DROP TABLE checkout;"
-				+ "DROP TABLE member;"
-				+ "DROP TABLE book;";
-		stmt.execute(dropTablesStmt);
+		// stores the SQL statements to drop the tables in an array
+		String[] dropTableStatements = {
+				"DROP TABLE IF EXISTS CHECKOUT",
+				"DROP TABLE IF EXISTS MEMBER",
+				"DROP TABLE IF EXISTS BOOK"
+		};
+
+		// loops through the array and tries to drop each table for each SQL statement
+		for (String dropTableStatement : dropTableStatements) {
+			stmt.execute(dropTableStatement);
+		}
 		
 	}
 	// Method to disconnect from the database and close the keyboard scanner
