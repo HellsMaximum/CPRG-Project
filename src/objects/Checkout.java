@@ -21,12 +21,6 @@ public class Checkout
 	public void setDateToReturn(String dateToReturn) {
 		this.dateToReturn = dateToReturn;
 	}
-	public String getOverdueFees() {
-		return overdueFees;
-	}
-	public void setOverdueFees(String overdueFees) {
-		this.overdueFees = overdueFees;
-	}
 	public boolean isReturnedStatus() {
 		return returnedStatus;
 	}
