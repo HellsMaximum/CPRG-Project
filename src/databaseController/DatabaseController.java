@@ -2,7 +2,7 @@ package databaseController;
 
 import java.sql.*;
 
-public class DatabaseControler {
+public class DatabaseController {
 	// Private Variables that handle connecting the database
 	private static final String SERVER = "localhost";
 	private static final int PORT = 3306;

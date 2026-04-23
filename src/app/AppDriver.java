@@ -2,7 +2,7 @@ package app;
 
 import java.sql.SQLException;
 
-import databaseController.DatabaseControler;
+import databaseController.DatabaseController;
 import manager.CheckoutManager;
 import manager.MemberManager;
 import manager.BookManager;
@@ -10,7 +10,7 @@ import manager.BookManager;
 public class AppDriver {
 
 	public static void main(String[] args) {
-		DatabaseControler dbc = new DatabaseControler();
+		DatabaseController dbc = new DatabaseController();
 		try {
 			dbc.connect();
 		} catch (SQLException e) {
