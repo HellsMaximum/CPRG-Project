@@ -21,7 +21,55 @@ public class DatabaseController {
 		System.out.println("Connection to DB established.");
 		stmt= conn.createStatement();	
 	}
-	
+	public void createTables() throws SQLException{
+		String SQLStatement = "DROP TABLE book_checkout;\r\n"
+				+ "DROP TABLE member_checkout;\r\n"
+				+ "DROP TABLE checkout;\r\n"
+				+ "DROP TABLE member;\r\n"
+				+ "DROP TABLE book;\r\n"
+				+ "\r\n"
+				+ "CREATE TABLE book (\r\n"
+				+ "    isbn VARCHAR(13) PRIMARY KEY,\r\n"
+				+ "    name VARCHAR(30),\r\n"
+				+ "    author VARCHAR(30),\r\n"
+				+ "    genre VARCHAR(30),\r\n"
+				+ "    checked_out CHAR(1)\r\n"
+				+ ");\r\n"
+				+ "\r\n"
+				+ "CREATE TABLE member (\r\n"
+				+ "    id NUMBER(30) PRIMARY KEY,\r\n"
+				+ "    name VARCHAR(30),\r\n"
+				+ "    total_overdue_fees VARCHAR(30),\r\n"
+				+ "    can_checkout CHAR(1)\r\n"
+				+ ");\r\n"
+				+ "CREATE TABLE checkout (\r\n"
+				+ "    id VARCHAR2(30) PRIMARY KEY,\r\n"
+				+ "    date_of_checkout DATE,\r\n"
+				+ "    date_to_return DATE,\r\n"
+				+ "    overdue_fees VARCHAR(30),\r\n"
+				+ "    returned_status CHAR(1),\r\n"
+				+ "    checked_out_isbn VARCHAR(13),\r\n"
+				+ "    checked_out_id NUMBER(30),\r\n"
+				+ "    CONSTRAINT fk_checkout_book FOREIGN KEY (checked_out_isbn) REFERENCES book(isbn),\r\n"
+				+ "    CONSTRAINT fk_checkout_member FOREIGN KEY (checked_out_id) REFERENCES member(id)\r\n"
+				+ ");\r\n"
+				+ "CREATE TABLE book_checkout (\r\n"
+				+ "    isbn VARCHAR(13),\r\n"
+				+ "    checkout_id VARCHAR(30),\r\n"
+				+ "    CONSTRAINT pk_book_checkout PRIMARY KEY (isbn, checkout_id),\r\n"
+				+ "    CONSTRAINT fk_bc_book FOREIGN KEY (isbn) REFERENCES book(isbn),\r\n"
+				+ "    CONSTRAINT fk_bc_checkout FOREIGN KEY (checkout_id) REFERENCES checkout(id)\r\n"
+				+ ");\r\n"
+				+ "\r\n"
+				+ "CREATE TABLE member_checkout (\r\n"
+				+ "    member_id NUMBER(30),\r\n"
+				+ "    checkout_id VARCHAR(30),\r\n"
+				+ "    CONSTRAINT pk_member_checkout PRIMARY KEY (member_id, checkout_id),\r\n"
+				+ "    CONSTRAINT fk_mc_member FOREIGN KEY (member_id) REFERENCES member(id),\r\n"
+				+ "    CONSTRAINT fk_mc_checkout FOREIGN KEY (checkout_id) REFERENCES checkout(id)\r\n"
+				+ ");";
+		stmt.execute(SQLStatement);
+	}
 	// Method to disconnect from the database and close the keyboard scanner
 	public void disconnect() {
 		try {
