@@ -9,12 +9,16 @@ import errors.NotFoundException;
 
 public class BookManager extends Manager {
 
+	/**
+	 * Constructor to initialize the book manager by setting the super class variables for the database connection
+	 */
 	public BookManager(Connection conn, Statement stmt) {
 		super(conn, stmt);
-		// TODO Auto-generated constructor stub
 	}
 
-	// Method to display the menu options for the book manager and handle user input
+	/** 
+	 * Method to display the menu options for the book manager and handle user input
+	 */
 	@Override
 	public void displayMenu() {
 		// Variable to hold the user's menu input and initialize the keyboard scanner created in the method abstract class
@@ -22,6 +26,7 @@ public class BookManager extends Manager {
 		keyboard = new Scanner(System.in);
 		// Loop menu options until the user chooses to exit the book manager
 		while(choice != 6) {
+			System.out.println("Book Manager Menu:");
 			System.out.println("1) Add new book.");
 			System.out.println("2) Search for a book.");
 			System.out.println("3) Update existing book.");
@@ -54,7 +59,6 @@ public class BookManager extends Manager {
 					viewAll();
 					break;
 				case 6:
-					keyboard.close();
 					System.out.println("Returning to main menu.");
 					break;
 				default:
@@ -63,8 +67,11 @@ public class BookManager extends Manager {
 		}
 	}
 
-	// Method to add a new book to the database
-	// Includes error handling for the ISBN, title, genre, and author inputs using the custom exceptions created in the errors package
+	/** 
+	 * Method to add a new book to the database based on user input
+	 * Includes error handling for the ISBN, title, genre, and author inputs 
+	 * does the error handling using the custom exceptions created in the errors package
+	 */
 	@Override
 	public void add() {
 		// get the isbn the user wants to add
@@ -133,7 +140,12 @@ public class BookManager extends Manager {
 		}
 	}
 
-	// method to remove a book from the database based on the ISBN input from the user
+	/** 
+	 * Method to remove a book from the database based on the ISBN input from the user
+	 * if the book is not found, error out and return to the menu
+	 * if the book is found, delete it from the database and return to the menu
+	 * Includes error handling for the ISBN input using the custom exceptions created in the errors package 
+	 */ 
 	@Override
 	public void remove() {
 		System.out.println("Enter ISBN of book to remove: ");
@@ -170,6 +182,16 @@ public class BookManager extends Manager {
 		
 	}
 
+	/**
+	 * Method to update an existing book in the database based on the ISBN of that book
+	 * user inputs the ISBN of the book they want to update the element of
+	 * if the book is not found, error out and return to the menu
+	 * if the book is found display the current information for that book
+	 * user selects the element of the book they want to update (title, genre, author)
+	 * user inputs the new data for the selected element
+	 * if the new data is in an invalid format, error out and return to the menu
+	 * if the new data is valid, update the book in the database with the new data and return to the menu
+	 */
 	@Override
 	public void update(){
 		// get the user to input the ISBN of the book they want to update
@@ -262,6 +284,13 @@ public class BookManager extends Manager {
 		}
 	}
 
+	/**
+	 * Method to search through the database for any books that match the user's search criteria
+	 * User can search by any of the books attributes (ISBN, title, genre, author)
+	 * if the user inputs data in an invalid format loop until they input valid data
+	 * Returns all the data for the matching books and displays it in a readable format
+	 * If there are no matches for the search criteria, display a message saying no books were found
+	 */
 	@Override
 	public void search() {
 		System.out.println("Enter how you want to search for a book: \n1) ISBN \n2) Title \n3) Genre \n4) Author");
@@ -397,14 +426,24 @@ public class BookManager extends Manager {
 		
 	}
 	
+	/**
+	 * Method to view all the books in the database
+	 * Returns all the data for all the books in the database and displays it in a readable format
+	 * If there are no books in the database, display a message saying there are no books to display
+	 */
 	@Override
 	public void viewAll() {
 		String sqlStmt = "SELECT * FROM BOOK";
 		try {
 			PreparedStatement stmt = conn.prepareStatement(sqlStmt);
 			ResultSet resultSet = stmt.executeQuery();
+			boolean found = false;
 			while (resultSet.next()) {
+				found = true;
 				System.out.println(String.format("ISBN: %d Title: %s Genre: %s Author: %s", resultSet.getLong("ISBN"), resultSet.getString("Title"), resultSet.getString("Genre"), resultSet.getString("Author")));
+			}
+			if (!found) {
+				System.out.println("No books to display.");
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());

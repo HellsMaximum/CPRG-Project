@@ -11,22 +11,19 @@ import manager.BookManager;
 public class AppDriver {
 
 	public static void main(String[] args) {
+		// Establish connection to the database
 		DatabaseController dbc = new DatabaseController();
 		try {
 			dbc.connect();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		new BookManager(dbc.getConn(), dbc.getStmt());
-		// new MemberManager(DatabaseConnection.getConn(), DatabaseConnection.getStmt());
-		// new CheckoutManager(DatabaseConnection.getConn(), DatabaseConnection.getStmt());
-		
 		
 		//Main Menu
 		int choiceM = 0;
+		Scanner keyboardM = new Scanner(System.in);
 		//loop for entering sub-menus/methods
 		while(choiceM != 4) {
-			Scanner keyboardM = new Scanner(System.in);
 			System.out.println("1) Manage Books.");
 			System.out.println("2) Manage Members.");
 			System.out.println("3) Manage Checkouts.");
@@ -35,26 +32,26 @@ public class AppDriver {
 			switch(choiceM) {
 				case 1: 
 				try { 
-					keyboardM.close();
+					new BookManager(dbc.getConn(), dbc.getStmt());
 					//use initialized books class
 				} catch (Throwable e) {
-					e.getMessage();
+					System.out.println(e.getMessage());
 				}
 					break;
 				case 2:
 				try {
-					keyboardM.close();
+					new MemberManager(dbc.getConn(), dbc.getStmt());
 					//use initialized members class
 				} catch (Throwable e) {
-					e.getMessage();
+					System.out.println(e.getMessage());
 				}
 					break;
 				case 3:
 				try {
-					keyboardM.close();
+					new CheckoutManager(dbc.getConn(), dbc.getStmt());
 					//use the initialized checkouts class
 				} catch (Throwable e) {
-					e.getMessage();
+					System.out.println(e.getMessage());
 				}
 					break;
 				case 4:
